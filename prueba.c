@@ -2,7 +2,7 @@
 
 	int main(){
 
-		printf("\n	Esto es una prueba");
+		printf("\n	Esto es una prueba\n Este salto de linea esta patrocinado por un koala\n");
 
 	return 0;
 	}
