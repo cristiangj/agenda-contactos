@@ -1,8 +1,11 @@
-repositorio-compartido
+ repositorio-compartido
 ======================
 
 OMG liadla parda!! this is spartaaaaaa!!!! 
 guiño guiño
+
+Moooooooooooooocasines saltarines con la piel de dos mastines
+los cachorros para smoking van feeteeeeeeeeeeeen
 
 CAPTAIN SALAMI WAS HERE
 trabajo de grupo
