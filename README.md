@@ -1,6 +1,9 @@
 repositorio-compartido
 ======================
 
+OMG liadla parda!! this is spartaaaaaa!!!! 
+guiño guiño
+
 CAPTAIN SALAMI WAS HERE
 trabajo de grupo
 
