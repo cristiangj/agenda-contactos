@@ -1,6 +1,7 @@
 repositorio-compartido
 ======================
 
+CAPTAIN SALAMI WAS HERE
 trabajo de grupo
 
 añadir una línea a un archivo que ya existe
