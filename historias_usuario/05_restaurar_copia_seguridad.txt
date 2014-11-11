@@ -7,7 +7,7 @@ Confirmaciones
 -La opción se ofrecerá en la pantalla principal del programa para que el usuario pueda elegirla si lo necesita
 -Las copias aparecerán con el formato establecido en la historia anterior
 -Se mostrará la copia de seguridad seleccionada y se pedirá confirmación para restaurar dicha copia al usuario
--Se mostrarán las copias de seguridad disponibles o ya realizadas,si no existe ninguna no se mostrará nada
+-Se mostrarán las copias disponibles o ya realizadas,si no existe ninguna se mostrará un mensaje diciendo que no existe ninguna copia de seguridad almacenada
 ---------------------------------
 Prioridad: 3
 Estimación: 1h
