@@ -1,6 +1,6 @@
 6 - Borrar copia de seguridad
 ---------------------------------
-Como administrador quiero poder borrar alguna de las copias de seguridad que tengo ya almacenadas
+Como administrativo quiero poder borrar alguna de las copias de seguridad que tengo ya almacenadas
 ---------------------------------
 Confirmaciones
 -La opción será ofrecida en la pantalla principal para que el usuario pueda seleccionarla cuando la necesite
