@@ -1,0 +1,31 @@
+Caso de uso: Restaurar copia de seguridad
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Restaurar una copia de seguridad
+
+Precondiciones: Debe existir una copia de seguridad
+
+Disparador: El administrativo decide restaurar una copia de seguridad para recuperar el sistema
+
+Escenario:
+1. Administrativo: ejecuta la aplicación
+2. Administrativo: desde el menú principal, elige la opción "Restaurar copia de seguridad"
+3. Administrativo: elige la copia de seguridad que desea restaurar
+4. Administrativo: confirma la acción de restaura copia de seguridad
+5. Aplicación: la aplicación lleva a cabo la restauración del sistema guardada en esa copia de seguridad
+6. Aplicación: vuelve al menú principal
+
+Excepciones:
+2a. No existe ninguna copia de seguridad para restaurar
+4a. En caso de no confirmar la accion de restaurar, volverá al menú principal
+
+
+Prioridad: Secundario
+
+Cuando estará disponible:
+
+Frecuencia de uso: pocas veces al mes (solo cuando sea necesario)
+
+Canal para el actor: terminal en modo texto
+

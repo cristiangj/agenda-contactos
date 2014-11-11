@@ -1,0 +1,30 @@
+Caso de uso: Borrar un contacto
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Eliminar un contacto de la agenda
+
+Precondiciones: Debe existir un contacto para poder ser eliminado, ya que será una de las opciones de gestión de la consulta
+
+Disparador: El administrativo decide eliminar un contacto de la lista
+
+Escenario:
+1. Administrativo: ejecuta la aplicación
+2. Administrativo: desde el menú principal, elige la opción "Consultar contacto"
+3. Administrativo: elige el contacto que desea consultar
+4. Administrativo: elige la opcion de gestión "Eliminar contacto"
+5. Administrativo: confirma la acción de eliminar dicho contacto
+6. Aplicación: vuelve al menú principal
+
+Excepciones:
+5a. En caso de no confirmar la accion de borrar, no se llevará a cabo la eliminación del contacto y se volverá al menú principal
+
+
+Prioridad: Esencial, debe implementarse
+
+Cuando estará disponible:
+
+Frecuencia de uso: pocas veces al dia
+
+Canal para el actor: terminal en modo texto
+
