@@ -1,0 +1,30 @@
+Caso de uso: Borrar copia de seguridad
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Preparar el sistema para que pueda borrar una copia de seguridad que el usuario desee
+
+Precondiciones: Que haya al menos una copia de seguridad en el sistema
+
+Disparador: El administrativo decide borrar alguna copia de seguridad que ya tenía guardada anteriormente
+
+Escenario: 
+1.Administrador: tiene en pantalla la agenda
+2.Administrador: selecciona la opción de borrar copia de seguridad
+3.Administrador: selecciona la copia de seguridad a borrar
+4.Aplicación: el programa pide confirmación para borrar la copia de seguridad
+5.Administrador: observa un mensaje diciendo que el borrado de la copia se ha realizado satisfactoriamente
+6.Aplicación: El programa vuelve al menú principal
+
+Excepciones:
+4a.Se elige el no borrar la copia de seguridad y se va a 6
+4b.Fallo al borrar la copia de seguridad,se muestra un mensaje y se va a 6
+
+Prioridad: opción secundaria,debe implantarse si se quiere borrar la copia de segurirdad
+
+Cuándo estará disponible: 
+
+Frecuencia de uso: excepcional, se borrará la copia de seguridad solo si se desea hacerlo
+
+Canal para el actor: a través de la interfaz del programa
+

@@ -1,0 +1,34 @@
+Caso de uso: Imprimir en texto plano la agenda
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Preparar el sistema para que copie la agenda almacenada en un texto plano
+
+Precondiciones: Ninguna 
+
+Disparador: El administrativo decide imprimir en un archo de texto la agenda que tiene guardada
+
+Escenario: 
+1.Administrador: tiene en pantalla la agenda
+2.Administrador: selecciona la opción de imprimir
+3.Aplicación: El programa pide al administrador el nombre del archivo a generar y comprueb si ya existe
+4.Aplicación: El programa comprueba si hay algún contacto y genera un archivo formateado que contiene la lista de contactos
+5.Administrador: observa un mensaje diciendo que la impresión se ha realizado satisfactoriamente
+6.Aplicación: El programa vuelve al menú principal
+
+Excepciones:
+3.a.Si ya existe pide confirmación para sobreescribir y sino vuelve a 6
+4a.La agenda está vacía: se va a 6
+4b.La impresión falla,muestra al administrador un mensaje de error y va a 6
+
+
+Prioridad: opción secundaria,debe implantarse si se quiere imprimir la agenda
+
+Cuándo estará disponible: 
+
+Frecuencia de uso: excepcional, se imprimirá solo si se desea hacerlo
+
+Canal para el actor: a través de la interfaz del programa
+
+
+

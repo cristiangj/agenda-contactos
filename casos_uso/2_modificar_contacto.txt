@@ -1,0 +1,17 @@
+CASO DE USO: Modificar contacto
+ACTOR PRINCIPAL: Administrador
+OBJETIVO EN CONTEXTO: Permitir modificar campos de un contacto existente estén o no vacíos.
+PRECONDICIONES: Estar en modo "consultando un contacto"
+DISPARADOR: A.P. quiere modificar la información almacenada de un cliente existente.
+ESCENARIO: 
+	1) AP ha realizado el escenario del caso de uso "Buscar/consultar un contacto" y está en el punto 4).
+	2) AP elige entre las opciones para procesar al contacto "modificar"
+	3) AP está en "selección de campo a modificar" selecciona un campo y sobreescribe la información.
+	4) AP confirma el cambio y el programa regresa a "selección de campo a modificar".
+	5) AP repite los pasos 3) y 4) o sale del menú volviendo a "Buscar/consultar un contacto" por 4).
+EXCEPCIONES:
+	1) Fallo al guardar el nuevo campo. En tal caso se muestra el error por pantalla y se conserva el campo anterior.
+PRIORIDAD: Esencial
+CUANDO ESTARÁ DISPONIBLE:
+FRECUENCIA DE USO: Bastantes veces a la semana.
+CANAL PARA EL USO: A través del shell de Linux

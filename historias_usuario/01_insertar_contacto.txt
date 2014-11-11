@@ -1,0 +1,16 @@
+1 - Insertar un contacto
+------------------------
+Como administrativo
+Quiero insertar un contacto en la agenda
+Para poder consultarlo más tarde
+
+Confirmación
+--------------
+-El teléfono no se podrá repetir (se comprobará antes de la inserción)
+-Si se repite, se dará la opción de cambiar el número o cancelar la inserción
+-La aplicación lanzará una advertencia si se introduce un nombre completo que ya existe, por si realmente quisiera modificar un contacto existente
+-El resto de campos son opcionales
+-Se insertará en orden alfabético por nombre y apellidos
+
+Prioridad: 1
+Estimación: 3h

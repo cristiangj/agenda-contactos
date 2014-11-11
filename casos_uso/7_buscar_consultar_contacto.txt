@@ -1,0 +1,24 @@
+CASO DE USO: Buscar/consultar contacto
+ACTOR PRINCIPAL: Administrativo
+OBJETIVO EN CONTEXTO: Permitir acceder a un cliente concreto y mostrar todos los sus campos.
+PRECONDICIONES: Sistema con al menos un contacto en ese instante
+DISPARADOR: AP decide que quiere conocer algún dato más sobre un cliente dado su nombre o si hay un grupo de ellos que tiene algún campo común.
+ESCENARIO: 
+	1)AP está en la pantalla de inicio del programa
+	2)AP selecciona la opción "buscar"
+	3)AP escribe el apellido del cliente.
+	4)Si el apellido está en el sistema:
+		4.1)AP tiene que seleccionar un nombre en el caso de que aparezcan varios clientes
+		4.2)Se despliega toda la información (todos los campos) del cliente
+		4.3)AP selecciona entre opciones disponibles "salir" o de procesar la información.
+	5)Si el apellido no está en el sistema:
+		5.1)Se muestra por pantalla un mensaje informativo
+		5.2)Se muestran las opciones "añadir contacto", "volver a búsqueda" o "nueva búsqueda".
+		5.3)AP selecciona una de las opciones
+	6)AP elige opción "salir" y vuelve al menú principal
+EXCEPCIONES:
+	1)Existe la posibilidad de que el usuario elija otro campo por el que buscar. Seleccionado el campo y metido el criterio aparecerán los clientes que se correspondan con dicho criterio, pudiendo seleccionar el AP el que quiera.
+PRIORIDAD: Esencial
+CUÁNDO ESTARÁ DISPONIBLE:
+FRECUENCIA DE USO: Muchas veces al día
+CANAL PARA EL USO: A través del shell de Linux

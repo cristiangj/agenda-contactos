@@ -1,0 +1,16 @@
+2 - Buscar/Consultar un contacto
+----------------------------------
+Como administrativo
+Quiero buscar un contacto en la agenda
+Para consultar sus datos
+
+Confirmación
+--------------
+-Se podrá buscar, principalmente por apellido (por defecto) o también por cualquier otro campo
+-Se podrá buscar por una porción de un campo
+-Se mostrarán todos los resultados coincidentes
+-Si no existen entradas que cumplan la búsqueda, se informará de ello al usuario
+-Se darán diferentes opciones a realizar con ese contacto detalladas en otras historias de usuario
+
+Prioridad: 1 (requiere antes insertar)
+Estimación: 5h

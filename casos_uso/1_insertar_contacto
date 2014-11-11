@@ -1,0 +1,29 @@
+Caso de uso: Insertar un contacto nuevo
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Añadir una nueva entrada a la lista de contactos para consultas posteriores
+
+Precondiciones: Ninguna
+
+Disparador: El administrativo decide añadir un nuevo contacto a la lista
+
+Escenario:
+1. Administrativo: ejecuta la aplicación
+2. Administrativo: desde el menú principal, elige la opción "Añadir un nuevo contacto"
+3. Administrativo: inserta los datos del nuevo contacto en el orden presentado por la aplicación
+4. Administrativo: termina de añadir los datos y se agrega a la lista
+
+Excepciones:
+3a. Puede elegir dejar vacío algunos de los campos (simplemente pulsa intro). El nombre completo es obligatorio (para poder consultarlo).
+4a. El usuario puede elegir tras ello dos opciones:
+	* Añadir otro contacto y volver a 3
+	* Volver al menú principal
+
+Prioridad: Esencial, debe implementarse
+
+Cuando estará disponible:
+
+Frecuencia de uso: Varias veces al día
+
+Canal para el actor: terminal en modo texto

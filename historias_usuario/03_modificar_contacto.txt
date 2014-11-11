@@ -1,0 +1,11 @@
+3 - Modificar un contacto
+----------------------------
+Como administrativo
+Quiero modificar un contacto existente en la agenda
+Para actualizar sus datos
+
+Confirmación
+---------------
+-Primero se buscará el contacto como se estipula en la historia 2 (buscar/consultar)
+-
+-Tras modificar el contacto se asegurará que se mantiene el orden alfabético

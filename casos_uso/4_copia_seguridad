@@ -1,0 +1,27 @@
+Caso de uso: Hacer una copia de seguridad
+
+Actor principal: Administrativo
+
+Objetivo en contexto: Realizar una copia de seguridad de los datos que se puede guardar en un soporte externo y recuperar posteriormente
+
+Precondiciones: Ninguna
+
+Disparador: El administrativo decide realizar una copia de seguridad para proteger los datos
+
+Escenario:
+1. Administrativo: observa el menú
+2. Administrativo: elige la opción de realizar una copia de seguridad
+3. Administrativo: el programa informa del tamaño de la copia de seguridad y le pide confirmación
+4. Administrativo: vuelve al menú principal
+
+Excepciones:
+3a. El administrativo cancela la creación de la copia de seguridad y se salta a 4
+3b. La aplicación detecta que no hay espacio en el disco y cancela la operación y salta a 4
+
+Prioridad: Baja, no es esencial
+
+Cuando estará disponible:
+
+Frecuencia de uso: A elección del usuario, recomendado 1 vez al día
+
+Canal para el actor: terminal en modo texto
