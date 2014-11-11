@@ -1,5 +1,5 @@
 CASO DE USO: Modificar contacto
-ACTOR PRINCIPAL: Administrador
+ACTOR PRINCIPAL: Administrativo
 OBJETIVO EN CONTEXTO: Permitir modificar campos de un contacto existente estén o no vacíos.
 PRECONDICIONES: Estar en modo "consultando un contacto"
 DISPARADOR: A.P. quiere modificar la información almacenada de un cliente existente.
@@ -10,7 +10,7 @@ ESCENARIO:
 	4) AP confirma el cambio y el programa regresa a "selección de campo a modificar".
 	5) AP repite los pasos 3) y 4) o sale del menú volviendo a "Buscar/consultar un contacto" por 4).
 EXCEPCIONES:
-	1) Fallo al guardar el nuevo campo. En tal caso se muestra el error por pantalla y se conserva el campo anterior.
+	1) El valor introducido es inválido. En tal caso, se vuelve a pedir al usuario el valor
 PRIORIDAD: Esencial
 CUANDO ESTARÁ DISPONIBLE:
 FRECUENCIA DE USO: Bastantes veces a la semana.
