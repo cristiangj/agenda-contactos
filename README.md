@@ -1,4 +1,4 @@
- repositorio-compartido
+ agenda-contactos
 ======================
 
 Proyecto agenda
