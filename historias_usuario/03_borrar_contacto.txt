@@ -1,0 +1,15 @@
+8. Borrar un contacto
+----------------------
+Como administrativo
+Quiero borrar un contacto de la agenda
+Para eliminar una entrada innecesaria
+
+Confirmación
+--------------
+-La entrada dejará de ocupar espacio de almacenamiento (no se puede restaurar, si no es por una copia de seguridad)
+-Se requerirá confirmación del usuario
+-La opción de borrar aparecerá como opción de gestión en la consulta del contacto
+-El orden se mantendrá tras la eliminación
+
+Prioridad: 1
+Estimación: 1h

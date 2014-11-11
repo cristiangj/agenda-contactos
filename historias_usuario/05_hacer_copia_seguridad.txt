@@ -1,0 +1,13 @@
+﻿4 - Hacer copia de seguridad
+-------------------------------
+Como administrador quiero poder hacer una copia de seguridad de mis contactos para proteger de posibles perdidas o cambios no deseados
+-------------------------------
+Confirmaciones
+-La opción se ofrecerá en la pantalla principal del programa para que el usuario la realice cuando desee.
+-La copia se guardará con nombre de la fecha del día en el que está y en formato .pak
+-Si se hacen más de una copia de seguridad en el día se daría el caso de que se sobreescribieran archivos, así que se daría la opción de añadir un número para distinguirla de la copia primera o de sobreescribir.
+-Se mostrará el tamaño que el archivo.pak tendría y se pide confirmación al usuario.
+-Si la agenda estuviera vacía la copia se haría igualmente pero mostrando una advertencia en el terminal informando de la situación
+------------------------------
+Prioridad: 2
+Estimación: 1h

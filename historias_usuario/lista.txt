@@ -1,11 +1,9 @@
 ﻿Lista historias:
 1. Insertar un contacto
-2. Buscar/Consultar un contacto
-3. Modificar un contacto (falta terminar)
-
-Quedan:
-Borrar un contacto 
-Hacer copia de seguridad (aurora)
-Restaurar copia de seguridad (cristian)
-Borrar copia de seguridad (cristian)
-Guardar en formato legible (javi)
+2. Modificar un contacto
+3. Borrar un contacto
+4. Buscar/Consultar un contacto
+5. Hacer copia de seguridad
+6. Restaurar copia de seguridad
+7. Borrar copia de seguridad
+8. Guardar en formato legible

@@ -1,0 +1,16 @@
+3 - Modificar un contacto
+----------------------------
+Como administrativo
+Quiero modificar un contacto existente en la agenda
+Para actualizar sus datos
+
+Confirmación
+---------------
+-La opción aparecerá opción de gestión en la consulta del contacto
+-El usuario eligirá qué campo es el que quiere actualizar
+-Tras actualizar el campo elegido se dará la opción de actualizar otro campo hasta elija salir
+-La aplicación vigilará que los datos introducidos son válidos (p.ej. caracteres alfabéticos en el campo 'teléfono')
+-Tras modificar el contacto se asegurará que se mantiene el orden alfabético
+
+Prioridad: 1
+Estimación: 2h

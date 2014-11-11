@@ -1,0 +1,12 @@
+6 - Borrar copia de seguridad
+---------------------------------
+Como administrativo quiero poder borrar alguna de las copias de seguridad que tengo ya almacenadas
+---------------------------------
+Confirmaciones
+-La opción será ofrecida en la pantalla principal para que el usuario pueda seleccionarla cuando la necesite
+-Las copias de seguridad aparecerán como nombre con la fecha y hora de cuando se realizaron
+-Se mostrará el nombre de la copia seleccionada por el usuario y se pedirá la confirmación para borrarla
+-Si no hubiese ninguna copia almacenada se mostrará un mensaje diciendo que no existe ninguna copia almacenada
+----------------------------------
+Prioridad: 3
+Estimación: 1h

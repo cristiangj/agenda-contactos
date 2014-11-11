@@ -1,0 +1,16 @@
+7 - Guardar en un formato legible para el usuario
+---------------------------------------------------
+Como administrativo
+Quiero guardar la lista de contactos en un formato agradable y legible
+Para facilitar la consulta de la agenda
+
+Confirmaciones
+---------------
+-Se guardará en formato de texto plano
+-Se añadirán todos los datos referentes a cada entrada de la agenda
+-Se podrá diferenciar fácilmente a cada entrada
+-Se indicará que significa cada campo
+-El usuario podrá elegir el nombre del archivo generado
+
+Estimación: 2h
+Prioridad: 3

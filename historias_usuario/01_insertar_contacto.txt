@@ -9,6 +9,7 @@ Confirmación
 -El teléfono no se podrá repetir (se comprobará antes de la inserción)
 -Si se repite, se dará la opción de cambiar el número o cancelar la inserción
 -La aplicación lanzará una advertencia si se introduce un nombre completo que ya existe, por si realmente quisiera modificar un contacto existente
+-La aplicación vigilará que los datos introducidos son válidos (p.ej. caracteres alfabéticos en el campo 'teléfono')
 -El resto de campos son opcionales
 -Se insertará en orden alfabético por nombre y apellidos
 

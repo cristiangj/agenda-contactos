@@ -1,0 +1,14 @@
+5 - Restaurar copia de seguridad
+----------------------------------
+Como administrador quiero poder restaurar una de las copias de seguridad
+que anteriormente haya guardado eligiendo la que desee
+---------------------------------
+Confirmaciones
+-La opción se ofrecerá en la pantalla principal del programa para que el usuario pueda elegirla si lo necesita
+-Las copias de seguridad aparecerán como nombre con la fecha y hora de cuando se realizaron
+-Se mostrará el nombre de la copia de seguridad seleccionada y se pedirá confirmación para restaurar dicha copia al usuario
+-Se mostrarán las copias disponibles o ya realizadas,si no existe ninguna se mostrará un mensaje diciendo que no existe ninguna copia de seguridad almacenada
+---------------------------------
+Prioridad: 2
+Estimación: 1h
+
