@@ -1,11 +1,10 @@
 CASOS DE USO
 --------------------------
-1. Insertar contacto (for javi)
-2. Modificar contaco (for aurora)
-3. Borrar contacto (for kike)
-4. Buscar/consultar contacto (for aurora)
-5. Hacer copia de seg (for javi)
-6. Restaurar una copia de seguridad (for kike)
-7. Borrar copia de seguridad (for cristian)
-8. Guardar en formato agradable visualmente en texto plano con opcion print (for me)
-
+1. Insertar contacto
+2. Buscar/consultar contacto
+3. Modificar contacto
+4. Borrar contacto
+5. Hacer copia de seguridad
+6. Restaurar una copia de seguridad
+7. Borrar una copia de seguridad
+8. Imprimir en texto plano la agenda
