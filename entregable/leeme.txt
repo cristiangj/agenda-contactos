@@ -1,3 +1,11 @@
+Componentes:
+Enrique Álvarez Gallego
+Javier Barbero Gómez
+Aurora Esteban Toscano
+Cristian García Jiménez
+
+Repositorio: https://github.com/cristiangj/agenda-contactos.git
+
 Los documentos anteriores a la revisión se han marcado con el sufijo "_old"
 
 Cambios:
