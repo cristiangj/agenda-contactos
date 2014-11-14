@@ -10,8 +10,8 @@ Los documentos anteriores a la revisión se han marcado con el sufijo "_old"
 
 Cambios:
 -Resaltar referencias a otros casos de uso: Añadidos hipervínculos
--Refactorizar el escenario/precondiciones: Se ha específicado qué es precondición y qué no lo es
--Especificar id de los backups: Detalle pasado por alto, ahora se especifica cómo se identifican las copias de seguridad
+-Refactorizar el escenario/precondiciones: Se ha especificado qué es precondición y qué no lo es
+-Especificar ID de los backups: Detalle pasado por alto, ahora se especifica cómo se identifican las copias de seguridad
 -Casos 'else' como excepción: El flujo de los casos de uso se ha modificado de forma que las bifurcaciones tipo "si no" se han añadido como excepciones
 -No se puede imprimir si la agenda está vacía
 -Búsqueda sólo por apellido: Se habían especificado más métodos de búsqueda, que realmente no existían dentro de los requisitos
