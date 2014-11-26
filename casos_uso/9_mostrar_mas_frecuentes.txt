@@ -4,13 +4,12 @@ OBJETIVO EN CONTEXTO: Poder acceder directamente a los contactos más frecuentes
 PRECONDICIONES: Que haya al menos un contacto en la agenda
 DISPARADOR: AP decide acceder a un contacto que consulte mucho
 ESCENARIO:
-	1) AP selecciona opción "Más frecuentes"
-	2) Aplicación muestra el listado de los N contactos que tengan mayor número de consultas
-	3) AP selecciona un contacto
-	4) Aplicación entra en el caso de uso Buscar/Consultar contacto por "Aplicación: Muestra los datos del contacto y las opciones".
+	1) Aplicación muestra el listado de los N contactos que tengan mayor número de consultas
+	2) AP selecciona un contacto
+	3) Aplicación entra en el caso de uso Buscar/Consultar contacto por el punto 5.
 
 EXCEPCIONES:
-	1.a) AP aún no ha realizado ninguna consulta por lo que todos los contactos tienen 0 consultas. Se muestra un mensaje informando de que no hay registro de más frecuentes y se vuelve al menú principal
+	1.a)Si el administrativo aún no ha realizado ninguna consulta (todos los contactos tienen 0 consultas), simplemente no aparecerá ningún contacto en el menú principal
 	3.a) AP decide volver al menú principal sin consultar ningún contacto
 	
 PRIORIDAD: 4
