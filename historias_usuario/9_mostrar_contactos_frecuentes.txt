@@ -1,0 +1,14 @@
+9 - Mostrar contactos más frecuentes
+---------------------------------------
+Como administrativo
+Quiero poder ver los contactos más consultados
+Para acceder a los contactos más eficientemente
+
+Confirmación
+----------------------
+-Cada vez que se realice una consulta a un contacto el peso de ese contacto se incrementa en una unidad
+-Se deben mostrar los N contactos con mayor peso al ejecutar el programa
+-Si no se han realizado consultas la lista en el menú principal está vacía
+
+Prioridad: 4
+Estimación: 1h
