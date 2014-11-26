@@ -1,12 +1,13 @@
 CASO DE USO: Mostrar contactos favoritos
 ACTOR PRINCIPAL: Administrativo
+OBJETIVO EN CONTEXTO: Poder acceder directamente a los contactos predefinidos por el usuario como favoritos
 PRECONDICIONES: Sistema con al menos un contacto en ese instante
 DISPARADOR: Administrativo: decide que quiere consultar el listado de contactos favoritos
 ESCENARIO:
 	1. Administrativo: selecciona la opción "Favoritos" en el menú principal
 	2. Aplicación: muestra el listado de contactos que cumplen que han sido marcados como favoritos previamente
 	3. Administrativo: selecciona un contacto
-	4. Aplicación: entra en el caso de uso Buscar/Consultar contacto por "Aplicación: Muestra los datos del contacto y las opciones".
+	4. Aplicación: entra en el caso de uso Buscar/Consultar contacto por el punto 5
 
 EXCEPCIONES:
 	2.a) AP aún no ha marcado ningún contacto como favorito. Se muestra un mensaje informando de que no hay registro de más frecuentes y se vuelve al menú principal
