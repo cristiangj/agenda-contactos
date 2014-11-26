@@ -1,0 +1,13 @@
+10 - Mostrar los contactos favoritos
+---------------------------------------
+Como administrativo
+Quiero acceder a los contactos predefinidos como favoritos
+Para acceder a los contactos más eficientemente
+
+Confirmación
+-------------------
+-Si un contacto está marcado como favorito debe aparecer en la lista de favoritos
+-Aparecerá la opción de mostrar favoritos en el menú principal
+
+Prioridad: 4
+Estimación: 1h
