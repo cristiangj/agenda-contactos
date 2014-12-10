@@ -1,17 +1,12 @@
 /*
- * Contacto.cpp
+ * Menus_test.cpp
  *
  *  Created on: 10/12/2014
  *      Author: javier
  */
 
-#include "Contacto.h"
+#include "Menus.h"
 
 namespace agenda {
-
-Contacto::Contacto() {
-	// TODO Auto-generated constructor stub
-
-}
 
 } /* namespace agenda */
