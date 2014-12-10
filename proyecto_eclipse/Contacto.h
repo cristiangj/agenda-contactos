@@ -10,6 +10,9 @@
 
 namespace agenda {
 
+struct Cambio{
+};
+
 class Contacto {
 public:
 	Contacto();
