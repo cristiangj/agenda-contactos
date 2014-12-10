@@ -12,3 +12,11 @@ a: Añadir un contacto
 b: Buscar un contacto por apellido
 c: Copias de seguridad
 f: Generar una agenda en formato de texto
+
+Introduce un número para acceder a uno de los contactos
+más usados o introduce una letra para una de las opciones
+
+
+
+
+-->

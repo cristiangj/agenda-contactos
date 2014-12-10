@@ -10,11 +10,25 @@
 #include <string>
 #include <list>
 #include <iostream>
+#include <cstdlib>
 
 namespace agenda{
 
 char Menus::principal(std::list<Contacto> masUsados) {
-	std::cout <<
+	std::string aux;
+	char seleccion;
+
+	system("clear");
+	std::cout <<	"Agenda contactos" << std::endl <<
+					"====================" << std::endl <<
+					std::endl <<
+					"Contactos más usados:" << std::endl;
+
+	for(auto i = masUsados.begin() ; i != masUsados.end() ; ++i){
+
+	}
+
+
 }
 
 std::string Menus::busqueda() {
