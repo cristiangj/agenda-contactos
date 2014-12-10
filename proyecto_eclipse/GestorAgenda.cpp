@@ -5,8 +5,9 @@
  *      Author: aurora
  */
 
+
 #include "GestorAgenda.h"
-#include <cctype> //std::tolower
+#include <cctype>	//std::tolower
 
 
 string simplificaCadena(string cad)
@@ -21,10 +22,10 @@ string simplificaCadena(string cad)
 
 
 
-bool comparaApellido(Contacto a,Contacto b)
+bool comparaNombre(Contacto a,Contacto b)
 {
-	a.getApellidos()=simplificaCadena(a.getApellidos());
-	b.getApellidos()=simplificaCadena(b.getApellidos());
+	a.setApellidos(simplificaCadena(a.getApellidos()));
+	b.setApellidos(simplificaCadena(b.getApellidos()));
 
 	int i=0;
 	while((i<a.getApellidos().length())&&(i<b.getApellidos().length())){
@@ -36,8 +37,8 @@ bool comparaApellido(Contacto a,Contacto b)
 		}
 	}
 
-	a.getNombre()=simplificaCadena(a.getNombre());
-	b.getNombre()=simplificaCadena(b.getNombre());
+	a.setNombre(simplificaCadena(a.getNombre()));
+	b.setNombre(simplificaCadena(b.getNombre()));
 
 	i=0;
 	while((i<a.getNombre().length())&&(i<b.getNombre().length())){
@@ -54,19 +55,50 @@ bool comparaApellido(Contacto a,Contacto b)
 
 
 
+bool comparaNConsultas(Contacto a, Contacto b)
+{
+	if(a.getNConsultas()>=b.getNConsultas)
+		return true;
+	else
+		return false;
+}
 
-void GestorAgenda::addContacto(Contacto c)
+
+
+bool GestorAgenda::addContacto(Contacto c)	//Función cambiada de void a bool
 {
 	listaContactos_.push_back(c);
-	listaContactos_.sort(comparaApellido);
+	listaContactos_.sort(comparaNombre);
+	//Añadir comprobación si existe contacto de igual nombre
 }
+
+
+
+
+void GestorAgenda::borrarContacto(Contacto c)	//Se podría comprobar si se ha borrado un contacto
+{
+	c.setApellidos(simplificaCadena(c.getApellidos()));
+	c.setNombre(simplificaCadena(c.getNombre()));
+
+	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+
+		i->setApellidos(simplificaCadena(i->getApellidos()));
+		i->setNombre(simplificaCadena(i->getNombre()));
+
+		if((i->getNombre()==c.getNombre())&&(i->getApellidos()==c.getNombre())){
+				listaContactos_.erase(i);
+				break;
+		}
+	}
+}
+
 
 
 
 list<Contacto&> GestorAgenda::buscarContactoApellidos(string apellidos)
 {
 	apellidos=simplificaCadena(apellidos);
-	list<Contacto&>result;
+	list<Contacto&> result;
 
 	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		i->getApellidos()=simplificaCadena(i->getApellidos());
@@ -75,4 +107,47 @@ list<Contacto&> GestorAgenda::buscarContactoApellidos(string apellidos)
 	}
 
 	return result;
+}
+
+
+
+
+list<Contacto&> GestorAgenda::buscarContactoFavoritos()
+{
+	list<Contacto&> result;
+
+	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+		if(i->getFavorito()==true)
+			result.push_back(*i);
+	}
+	return result;
+}
+
+
+
+
+list<Contacto&> GestorAgenda::masUsados(int cuantos)
+{
+	list<Contacto&> result;
+
+	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+		if(i->getNConsultas()>result.end()){
+			result.pop_back();
+			result.push_back(*i);
+		}
+		result.sort(comparaNConsultas);
+	}
+
+}
+
+
+
+
+
+void GestorAgenda::crearCopiaSeguridad()
+{
+	FILE *f;
+	string copia;
+
+
 }

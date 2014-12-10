@@ -14,10 +14,14 @@
 
 using namespace std;
 
-class GestorAgenda {
+class GestorAgenda
+{
 private:
 	list<Contacto> listaContactos_;
-	bool comparaApellido(Contacto a, Contacto b);
+
+	bool comparaNombre(Contacto a, Contacto b);
+	bool comparaNConsultas(Contacto a, Contacto b);
+
 	string simplificaCadena(string cad);
 
 public:
@@ -29,10 +33,22 @@ public:
 		// TODO Auto-generated destructor stub
 	};
 
-	void addContacto(Contacto c);
+	bool cargaListaContactos(list<Contacto> nuevaLista);
 
 	list<Contacto&> buscarContactoApellidos(string apellidos);
 	list<Contacto&> buscarContactoFavoritos();
+	list<Contacto&> masUsados(int cuantos);
+
+	void addContacto(Contacto c);
+	inline bool modificarContacto(Contacto c, list<Cambio> cambios){c.modificar(cambios)};
+	void borrarContacto(Contacto c);
+
+	list<string> listarCopiasSeguridad();
+	void crearCopiaSeguridad();
+	void restaurarCopiaSegurirad(string id);
+	list<string> borrarCopiaSeguridad(string id); //???
+
+	void imprimirTexto(string nombreFichero);
 };
 
 #endif /* GESTORAGENDA_H_ */
