@@ -8,6 +8,7 @@
 #ifndef MENUS_H_
 #define MENUS_H_
 
+#include "Contacto.h"
 #include <list>
 
 #define CONTACTOS_MAS_USADOS 5 //Número de contactos más usados que se utilizarán en el menú principal
@@ -22,7 +23,7 @@ public:
 	static Contacto addContacto();
 	static int copiaSeguridad();
 	static std::string formatoLegible();
-	static std::list<Cambio> modificarContacto();
+	static std::list<Cambio>  modificarContacto();
 	static bool borrarContacto();
 };
 
