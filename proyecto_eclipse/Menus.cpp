@@ -9,12 +9,13 @@
 #include "Contacto.h"
 #include <string>
 #include <list>
+#include <vector>
 #include <iostream>
 #include <cstdlib>
 
 namespace agenda{
 
-char Menus::principal(std::list<Contacto> masUsados) {
+char Menus::principal(std::vector<Contacto> masUsados) {
 	std::string aux;
 	char seleccion;
 
@@ -24,8 +25,9 @@ char Menus::principal(std::list<Contacto> masUsados) {
 					std::endl <<
 					"Contactos más usados:" << std::endl;
 
-	for(auto i = masUsados.begin() ; i != masUsados.end() ; ++i){
-
+	for(int i=0 ; i < masUsados.size() ; ++i){
+		std::cout <<	(i+1) << ") " << //Imprime índice
+						masUsados.at(i).getApellidosyNombre();
 	}
 
 
@@ -34,7 +36,7 @@ char Menus::principal(std::list<Contacto> masUsados) {
 std::string Menus::busqueda() {
 }
 
-Contacto Menus::listado(std::list<Contacto> lista) {
+Contacto Menus::listado(std::vector<Contacto> lista) {
 }
 
 Contacto Menus::addContacto() {
