@@ -1,0 +1,14 @@
+Agenda contactos
+====================
+
+Contactos más usados:
+1)
+2)
+3)
+4)
+5)
+
+a: Añadir un contacto
+b: Buscar un contacto por apellido
+c: Copias de seguridad
+f: Generar una agenda en formato de texto
