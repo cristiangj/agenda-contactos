@@ -12,43 +12,41 @@
 #include <list>
 #include <string>
 
-using namespace std;
+namespace agenda{
 
 class GestorAgenda
 {
 private:
-	list<Contacto> listaContactos_;
+	std::list<Contacto> listaContactos_;
 
+	inline bool cargaListaContactos(std::list<Contacto> nuevaLista){listaContactos_=nuevaLista;};
+
+	bool nombresIguales(Contacto a, Contacto b);
 	bool comparaNombre(Contacto a, Contacto b);
 	bool comparaNConsultas(Contacto a, Contacto b);
 
-	string simplificaCadena(string cad);
+	std::string simplificaCadena(std::string cad);
 
 public:
 	GestorAgenda() {
 		// TODO Auto-generated constructor stub
-
+		cargaListaContactos(nuevaLista);
 	};
 	virtual ~GestorAgenda() {
 		// TODO Auto-generated destructor stub
+		PersistenciaAgenda respaldo;
+		respaldo.escribeBD(listaContactos_);
 	};
 
-	bool cargaListaContactos(list<Contacto> nuevaLista);
-
-	list<Contacto&> buscarContactoApellidos(string apellidos);
-	list<Contacto&> buscarContactoFavoritos();
-	list<Contacto&> masUsados(int cuantos);
+	std::list<Contacto> buscarContactoApellidos(std::string apellidos);
+	std::list<Contacto> buscarContactoFavoritos();
+	std::list<Contacto> masUsados(int cuantos);
 
 	void addContacto(Contacto c);
-	inline bool modificarContacto(Contacto c, list<Cambio> cambios){c.modificar(cambios)};
+	inline bool modificarContacto(Contacto c, std::list<Cambio> cambios){c.modificar(cambios)};
 	void borrarContacto(Contacto c);
 
-	list<string> listarCopiasSeguridad();
-	void crearCopiaSeguridad();
-	void restaurarCopiaSegurirad(string id);
-	list<string> borrarCopiaSeguridad(string id); //???
-
-	void imprimirTexto(string nombreFichero);
 };
 
+} /*namespace agenda*/
 #endif /* GESTORAGENDA_H_ */

@@ -8,13 +8,17 @@
 
 #include "GestorAgenda.h"
 #include <cctype>	//std::tolower
+#include <string>
+#include <list>
+
+namespace agenda{
 
 
-string simplificaCadena(string cad)
-{
+std::string simplificaCadena(std::string cad){
+
 	for(int i=0;i<cad.length();i++){
 		cad[i]=tolower(cad[i]);
-		//Falta averiguar como quitar acentos
+		//Falta averiguar como quitar tildes
 	}
 	return cad;
 }
@@ -22,8 +26,24 @@ string simplificaCadena(string cad)
 
 
 
-bool comparaNombre(Contacto a,Contacto b)
-{
+bool nombresIguales(Contacto a, Contacto b){
+
+	a.setApellidos(simplificaCadena(a.getApellidos()));
+	a.setNombre(simplificaCadena(a.getNombre()));
+
+	b.setApellidos(simplificaCadena(b.getApellidos()));
+	b.setNombre(simplificaCadena(b.getNombre()));
+
+	if((a.getNombre()==b.getNombre())&&(a.getApellido()==b.getApellido()))
+		return true;
+	else
+		return false;
+}
+
+
+
+bool comparaNombre(Contacto a, Contacto b){
+
 	a.setApellidos(simplificaCadena(a.getApellidos()));
 	b.setApellidos(simplificaCadena(b.getApellidos()));
 
@@ -55,9 +75,9 @@ bool comparaNombre(Contacto a,Contacto b)
 
 
 
-bool comparaNConsultas(Contacto a, Contacto b)
-{
-	if(a.getNConsultas()>=b.getNConsultas)
+bool comparaNConsultas(Contacto a, Contacto b){
+
+	if(a.getNConsultas()>=b.getNConsultas())
 		return true;
 	else
 		return false;
@@ -65,8 +85,8 @@ bool comparaNConsultas(Contacto a, Contacto b)
 
 
 
-bool GestorAgenda::addContacto(Contacto c)	//Función cambiada de void a bool
-{
+bool GestorAgenda::addContacto(Contacto c){	//Función cambiada de void a bool
+
 	listaContactos_.push_back(c);
 	listaContactos_.sort(comparaNombre);
 	//Añadir comprobación si existe contacto de igual nombre
@@ -75,19 +95,12 @@ bool GestorAgenda::addContacto(Contacto c)	//Función cambiada de void a bool
 
 
 
-void GestorAgenda::borrarContacto(Contacto c)	//Se podría comprobar si se ha borrado un contacto
-{
-	c.setApellidos(simplificaCadena(c.getApellidos()));
-	c.setNombre(simplificaCadena(c.getNombre()));
+void GestorAgenda::borrarContacto(Contacto c){	//Se podría comprobar si se ha borrado un contacto
 
-	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-
-		i->setApellidos(simplificaCadena(i->getApellidos()));
-		i->setNombre(simplificaCadena(i->getNombre()));
-
-		if((i->getNombre()==c.getNombre())&&(i->getApellidos()==c.getNombre())){
-				listaContactos_.erase(i);
-				break;
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+		if(nombresIguales(*i,c)){
+			listaContactos_.erase(i);
+			break;
 		}
 	}
 }
@@ -95,10 +108,10 @@ void GestorAgenda::borrarContacto(Contacto c)	//Se podría comprobar si se ha bo
 
 
 
-list<Contacto&> GestorAgenda::buscarContactoApellidos(string apellidos)
-{
+std::list<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos){
+
 	apellidos=simplificaCadena(apellidos);
-	list<Contacto&> result;
+	std::list<Contacto> result;
 
 	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		i->getApellidos()=simplificaCadena(i->getApellidos());
@@ -112,11 +125,11 @@ list<Contacto&> GestorAgenda::buscarContactoApellidos(string apellidos)
 
 
 
-list<Contacto&> GestorAgenda::buscarContactoFavoritos()
-{
-	list<Contacto&> result;
+std::list<Contacto> GestorAgenda::buscarContactoFavoritos(){
 
-	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+	std::list<Contacto> result;
+
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		if(i->getFavorito()==true)
 			result.push_back(*i);
 	}
@@ -126,28 +139,18 @@ list<Contacto&> GestorAgenda::buscarContactoFavoritos()
 
 
 
-list<Contacto&> GestorAgenda::masUsados(int cuantos)
-{
-	list<Contacto&> result;
+std::list<Contacto> GestorAgenda::masUsados(int cuantos){
 
-	for(list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+	std::list<Contacto> result;
+
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		if(i->getNConsultas()>result.end()){
 			result.pop_back();
 			result.push_back(*i);
 		}
 		result.sort(comparaNConsultas);
 	}
-
+	return result;
 }
 
-
-
-
-
-void GestorAgenda::crearCopiaSeguridad()
-{
-	FILE *f;
-	string copia;
-
-
-}
+} /*namespace agenda*/
