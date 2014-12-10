@@ -14,7 +14,6 @@
 namespace agenda{
 
 char Menus::principal(std::list<Contacto> masUsados) {
-	std::cout <<
 }
 
 std::string Menus::busqueda() {
