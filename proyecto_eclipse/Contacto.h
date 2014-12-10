@@ -17,6 +17,7 @@ struct Cambio{
 class Contacto {
 public:
 	Contacto();
+	std::string getApellidosyNombre();
 };
 
 } /* namespace agenda */

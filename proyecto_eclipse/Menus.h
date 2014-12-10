@@ -17,6 +17,9 @@
 namespace agenda {
 
 class Menus {
+private:
+	static bool comprobarEntradaValida(std::list<char> caracValidos, char c); //Recibe una lista de caracteres y comprueba si el caracter en cuestión está incluido
+
 public:
 	static char principal(std::vector<Contacto> masUsados);
 	static std::string busqueda();
