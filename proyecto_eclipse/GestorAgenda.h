@@ -19,19 +19,22 @@ class GestorAgenda
 private:
 	std::list<Contacto> listaContactos_;
 
-	inline bool cargaListaContactos(std::list<Contacto> nuevaLista){listaContactos_=nuevaLista;};
+	inline void cargaListaContactos(std::list<Contacto> nuevaLista){listaContactos_=nuevaLista;};	//Función cambiada de bool a void
 
-	bool nombresIguales(Contacto a, Contacto b);
-	bool comparaNombre(Contacto a, Contacto b);
-	bool comparaNConsultas(Contacto a, Contacto b);
+	int comparaNombres(Contacto a, Contacto b);
+	inline bool comparaNConsultas(Contacto a, Contacto b){if(a.getNConsultas()>=b.getNConsultas()) return true; else return false;};
 
 	std::string simplificaCadena(std::string cad);
+
 
 public:
 	GestorAgenda() {
 		// TODO Auto-generated constructor stub
+		PersistenciaAgenda respaldo;
+		std::list<Contacto> nuevaLista=respaldo.leeBD();
 		cargaListaContactos(nuevaLista);
 	};
+
 	virtual ~GestorAgenda() {
 		// TODO Auto-generated destructor stub
 		PersistenciaAgenda respaldo;
@@ -42,10 +45,11 @@ public:
 	std::list<Contacto> buscarContactoFavoritos();
 	std::list<Contacto> masUsados(int cuantos);
 
-	void addContacto(Contacto c);
-	inline bool modificarContacto(Contacto c, std::list<Cambio> cambios){c.modificar(cambios)};
+	bool addContacto(Contacto c);
+	inline bool modificarContacto(Contacto c, std::list<Cambio> cambios){if(c.modificar(cambios)) return true; else return false;};
 	void borrarContacto(Contacto c);
 
+	bool imprimirTexto(std::string nombreFichero);
 };
 
 } /*namespace agenda*/
