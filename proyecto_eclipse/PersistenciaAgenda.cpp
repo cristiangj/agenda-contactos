@@ -24,15 +24,9 @@ namespace agenda{
 		 no se tiene en cuenta,añadimos tambien ios::trunc por si no existe el fichero crearlo o si ya
 		 contiene datos los borra y los reemplaza por los nuevos*/
 
-		Contacto c;
+			if(ficheroSalida.is_open()){
 
-			if(!ficheroSalida){
-
-				cout << "\n ~~ Error en la creación de fichero" << endl;
-				return false;
-
-			}
-
+			
 			/*NOTA: podemos escribir el bloque completo (el objeto) que se encuentra en esa posicion de la lista
 			 a traves del iterador asignado a listaAgenda*/
 
@@ -42,9 +36,17 @@ namespace agenda{
 
 				}
 
-		ficheroSalida.close();
-		return true;
+				ficheroSalida.close();
+			
+				return true;
 
+			}else{
+
+				cout << "\n ~~ Error en la creación de fichero" << endl;
+				
+				return false;
+				
+			}
 	}
 
 	list<Contacto> PersistenciaAgenda::leeBD(){
@@ -54,26 +56,30 @@ namespace agenda{
 		list<Contacto> listaAgenda;
 		Contacto c;
 
-		if(!ficheroEntrada){
+		if(ficheroEntrada.is_open()){
 
-			cout << "\n ~~ Error en la apertura de fichero" << endl;
+			ficheroEntrada.seekg(0);			//establecemos el apuntador al inicio del fichero por seguridad
 
-		}
+			/*Se puede leer cada contacto como un bloque completo según el tamaño que ocupe dicho
+			 contacto,el tamaño de bloque para cada contacto lo calculamos con sizeof*/
 
-		ficheroEntrada.seekg(0);			//establecemos el apuntador al inicio del fichero por seguridad
+			while(ficheroEntrada.eof()!=EOF){
 
-		/*Se puede leer cada contacto como un bloque completo según el tamaño que ocupe dicho
-		 contacto,el tamaño de bloque para cada contacto lo calculamos con sizeof*/
+				ficheroEntrada.read((char *) &c,sizeof(c));
+				listaAgenda.push_back(c);
 
-		while(ficheroEntrada.eof()!=EOF){
-
-			ficheroEntrada.read((char *) &c,sizeof(c));
-			listaAgenda.push_back(c);
-
-		}
+			}
 
 			ficheroEntrada.close();
+			
 			return listaAgenda;
+		
+		}else{
+			
+			cout << "\n ~~ Error en la apertura de fichero" << endl;
+			
+		}
+
 	}
 
 }
