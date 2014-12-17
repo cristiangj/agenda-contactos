@@ -23,9 +23,13 @@ namespace agenda{
 
 std::string simplificaCadena(std::string cad){
 
+	std::string tildes="ÁáÉéÍíÓóÚú";
+	std::string notildes="AaEeIiOoUu";
+
 	for(int i=0;i<cad.length();i++){
-		cad[i]=tolower(cad[i]);
-		//Falta averiguar como quitar tildes
+		for(int j=0 ; j < tildes.size() ; ++j){
+			if(tildes[j] == cad[i]) cad[i] = notildes[j];
+		}
 	}
 	return cad;
 }
