@@ -26,13 +26,15 @@ namespace agenda{
 
 			if(ficheroSalida.is_open()){
 
-			
-			/*NOTA: podemos escribir el bloque completo (el objeto) que se encuentra en esa posicion de la lista
-			 a traves del iterador asignado a listaAgenda*/
+			/*escribimos cada contacto de la agenda en nuestro archivo binario con el operator << 
+			sobrecargado en la clase contacto y definido en Contacto.cpp, se hace asi debido a que 
+			un objeto no se puede introducir directamente en un archivo binario, NOTA: utilizamos este
+			archivo generado porque asi al abrir el programa poder tener la agenda tal y como la 
+			teniamos cuando cerramos el programa*/
 
 				for (it=listaAgenda.begin();it!=listaAgenda.end();it++){
 
-					ficheroSalida.write((char *) &(*it),sizeof(Contacto));
+					ficheroSalida << (*it);
 
 				}
 
@@ -54,18 +56,19 @@ namespace agenda{
 		ifstream ficheroEntrada(nombreFichero.c_str(),ios::in | ios::binary);
 
 		list<Contacto> listaAgenda;
-		Contacto c;
 
 		if(ficheroEntrada.is_open()){
 
-			ficheroEntrada.seekg(0);			//establecemos el apuntador al inicio del fichero por seguridad
+			ficheroEntrada.seekg(0);		//establecemos el apuntador al inicio del fichero por seguridad
 
-			/*Se puede leer cada contacto como un bloque completo según el tamaño que ocupe dicho
-			 contacto,el tamaño de bloque para cada contacto lo calculamos con sizeof*/
+			/*Para introducir cada contacto de nuevo en una lista y poder tenerla en memoria y hacer uso
+			de ella en nuestro programa usamos el operator >> sobrecargado en la clase Contacto y 
+			definido en Contacto.cpp*/
 
-			while(ficheroEntrada.eof()!=EOF){
+			while(ficheroEntrada.peek() != EOF){
 
-				ficheroEntrada.read((char *) &c,sizeof(c));
+				Contacto c;
+				ficheroEntrada >> c;
 				listaAgenda.push_back(c);
 
 			}
