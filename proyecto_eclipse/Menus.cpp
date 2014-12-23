@@ -26,7 +26,7 @@ char Menus::principal(std::vector<Contacto> masUsados) {
 	caracValidos.push_back('c');
 	caracValidos.push_back('f');
 	for(int i=0 ; i < CONTACTOS_MAS_USADOS ; ++i){
-
+		caracValidos.push_back('1' + i);
 	}
 
 	system("clear");
@@ -88,6 +88,14 @@ bool Menus::borrarContacto() {
 }
 
 bool Menus::comprobarEntradaValida(std::list<char> caracValidos, char c) {
+	bool valido = false;
+	std::list<char>::iterator it;
+
+	for(it = caracValidos.begin() ; it != caracValidos.end() && !valido; ++it){
+		if(c == (*it)) valido = true;
+	}
+
+	return valido;
 }
 
 }
