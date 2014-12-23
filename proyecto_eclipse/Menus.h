@@ -19,11 +19,12 @@ namespace agenda {
 class Menus {
 private:
 	static bool comprobarEntradaValida(std::list<char> caracValidos, char c); //Recibe una lista de caracteres y comprueba si el caracter en cuestión está incluido
+	static void limpiaPantalla(); //Limpia la pantalla del terminal
 
 public:
-	static char principal(std::vector<Contacto> masUsados);
+	static int principal(std::vector<Contacto> masUsados);
 	static std::string busqueda();
-	static Contacto listado(std::vector<Contacto> lista);
+	static Contacto listado(std::vector<Contacto&> lista);
 	static Contacto addContacto();
 	static int copiaSeguridad();
 	static std::string formatoLegible();

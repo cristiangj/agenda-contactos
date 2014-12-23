@@ -12,8 +12,15 @@
 
 namespace agenda {
 
+enum tipoRed {facebook, twitter, googleplus};
+
 struct Cambio{
 
+};
+
+struct Red{
+	tipoRed red;
+	std::string usuario;
 };
 
 class Contacto {
