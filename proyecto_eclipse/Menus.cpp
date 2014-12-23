@@ -180,29 +180,67 @@ Contacto Menus::addContacto() {
 	}while(!valido);
 
 	//Cuentas redes sociales
-	std::vector<std::string> redes = {"Facebook","Twitter","Google +"};
+	int selec;
+	bool nuevaRed;
+	do{
+		nuevaRed = false;
+		std::cout << "¿Deseas introducir una cuenta de redes sociales? (s/N):" << std::endl;
+		std::cin >> aux;
+		if(aux.size() == 1 && tolower(aux.at(0)) == 's') nuevaRed = true;
 
-	std::cout << "¿Deseas introducir una cuenta de redes sociales? (s/N):" << std::endl;
-	std::cin >> aux;
+		if(nuevaRed){
+			i = 0;
+			tipoRed t;
+			do{
+				valido = true;
+				std::cout << "¿Qué tipo de cuenta desea añadir?" << std::endl <<
+							"1) Facebook" << std::endl << "2) Twitter" << std::endl << "3) Google +" << std::endl <<
+							"--> " ;
+				std::cin >> selec;
+				switch(selec){
+				case 1:
+					t = facebook;
+					break;
+				case 2:
+					t = twitter;
+					break;
+				case 3:
+					t = googleplus;
+					break;
+				default:
+					std::cout << "Selección inválida" << std::endl;
+					valido = false;
+				}
+			}while(!valido);
 
-	if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
-		i = 0;
-		do{
-			valido = true;
-			std::cout << "Dirección " << (i+1) << ": ";
+			std::cout << "Nombre de usuario: ";
 			std::cin >> aux;
 
-			if(aux.size() != 0){ //Si el usuario no introduce nada, no se introduce ninguna dirección más
-				valido = c.setDireccion(i,aux);
+			CuentaRedSocial cuenta = {t,aux};
+			c.setRed(i,cuenta);
 
-				if(!valido){
-					std::cout << "Selección inválida" << std::endl;
-					continue;
-				}
-			}
 			++i;
-		}while(!valido);
+		}
+	}while(nuevaRed);
+
+	//Favorito
+	std::cout << "¿Deseas que el contacto aparezca en tu lista de favoritos? (s/N): ";
+	std::cin >> aux;
+	if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
+		c.setFavorito(true);
+		std::cout << "El contacto aparecerá en tu lista de favoritos" << std::endl;
 	}
+	else{
+		c.setFavorito(false);
+		std::cout << "El contacto NO aparecerá en tu lista de favoritos" << std::endl;
+	}
+
+	//Anotación
+	std::cout << "Añade a continuación cualquier anotación que quieras hacer sobre el usuario (puedes dejarlo en blanco):" << std::endl;
+	std::cin >> aux;
+	c.setAnotacion(aux);
+
+	return c;
 }
 
 int Menus::copiaSeguridad() {
