@@ -24,7 +24,7 @@ namespace agenda{
 std::string simplificaCadena(std::string cad){
 
 	//Quita las tildes
-	std::vector <std::string> tildes={"Á","á","É","é","Í","í","Ó","ó","Ú","ú"};	//Al compilar: g++ -std=c++11 archivo.cpp
+	std::vector <std::string> tildes={"Á","á","É","é","Í","í","Ó","ó","Ú","ú"};	//Al compilar: g++ -std=c++11 archivo.cpp (inicialización de vector válida a partir del estandar 2011)
 	std::vector <std::string> notildes={"A","a","E","e","I","i","O","o","U","u"};
 	size_t reemplazo;
 	for(int i=0;i<tildes.size();i++){
@@ -68,6 +68,7 @@ int comparaNombres(Contacto a, Contacto b){
 				return B_ANTES_A;
 	}
 	//Si llega hasta aquí => nombres completos iguales
+
 	return A_IGUAL_B;
 }
 
@@ -110,12 +111,12 @@ bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a boo
 std::list<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos){
 
 	apellidos=simplificaCadena(apellidos);
+	std::string aux;	//Los cambios en el formato del nombre se harán sobre una cadena auxiliar para no alterar mayúsculas y tildes en listaContactos_
 	std::list<Contacto> result;
 
-	//Comprobar si altera el formato de los nombre en listaContactos_
 	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-		i->getApellidos()=simplificaCadena(i->getApellidos());
-		if(i->getApellidos()==apellidos)
+		aux=simplificaCadena(i->getApellidos());
+		if(aux==apellidos)
 			result.push_back(*i);
 	}
 	return result;
@@ -154,10 +155,10 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 
 bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
 	GestorBackup respaldo;
-	if(respaldo.crearArchivoTexto(listaContactos_))	//Aquí habría que pasar también nombre fichero
+	if(respaldo.crearArchivoTexto(listaContactos_))
 		return true;
 	else
 		return false;
 }
 
-} /*namespace agenda*/
+} /* namespace agenda */
