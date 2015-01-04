@@ -19,13 +19,7 @@ namespace agenda{
 
 int Menus::principal(std::vector<Contacto> masUsados) {
 	std::string aux;
-	std::list<char> caracValidos;
-
-	//Lista de caracteres válidos de este menú
-	caracValidos = {'a','b','c','f'};
-	for(int i=0 ; i < CONTACTOS_MAS_USADOS ; ++i){
-		caracValidos.push_back('1' + i);
-	}
+	int seleccionUsuario; //Lo que en última instancia devolverá la función, la selección del usuario codificada
 
 	limpiaPantalla();
 	imprimeTitulo();
@@ -40,8 +34,9 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 	std::cout << std::endl <<
 			"a: Añadir un contacto" << std::endl <<
 			"b: Buscar un contacto por apellido" << std::endl <<
+			"f: Mostrar contactos favoritos" << std::endl <<
 			"c: Copias de seguridad" << std::endl <<
-			"f: Generar una agenda en formato de texto" << std::endl <<
+			"t: Generar una agenda en formato de texto" << std::endl <<
 			"" << std::endl <<
 			"Introduce un número para acceder a uno de los contactos" << std::endl <<
 			"más usados o introduce una letra para una de las opciones" << std::endl <<
@@ -50,18 +45,42 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 			std::endl <<
 			std::endl;
 
-	bool selValida = true; //¿Es la selección válida?
+	bool selValida; //¿Es la selección válida?
 	do{
+		selValida = true;
 		std::cout << "--> ";
 		std::cin >> aux;
 
-		selValida = comprobarEntradaValida(caracValidos,aux.at(0));
-		if(!selValida){
-			std::cout << "Selección inválida" << std::endl;
+		if(atoi(aux.c_str()) > 0 && atoi(aux.c_str()) <= masUsados.size()){ //Si ha seleccionado un contacto más usado:
+			seleccionUsuario = atoi(aux.c_str()) - 1;
+		} else {
+			switch(tolower(aux.at(0))){
+			case 'a':
+				seleccionUsuario = MENU_ANADIR_CONTACTO;
+				break;
+			case 'b':
+				seleccionUsuario = MENU_BUSCAR_CONTACTO_APELLIDO;
+				break;
+			case 'f':
+				seleccionUsuario = MENU_MOSTRAR_FAVORITOS;
+				break;
+			case 'c':
+				seleccionUsuario = MENU_COPIAS_SEGURIDAD;
+				break;
+			case 't':
+				seleccionUsuario = MENU_FORMATO_TEXTO;
+				break;
+
+			default:
+				selValida = false;
+				std::cout << "Selección inválida" << std::endl;
+			}
 		}
 	}while(!selValida);
 
-	return ((int) aux.at(0));
+	//Finalmente se decide qué valor se devolverá
+
+	return seleccionUsuario;
 }
 
 std::string Menus::busqueda() {
@@ -74,9 +93,10 @@ std::string Menus::busqueda() {
 	return busca;
 }
 
-Contacto Menus::listado(std::vector<Contacto&> lista) {
+int Menus::listado(std::vector<Contacto&> lista) {
 	int seleccion;
 
+	limpiaPantalla();
 	std::cout << "Selecciona un contacto:" << std::endl << std::endl;
 
 	for(int i=0 ; i < lista.size() ; ++i){
@@ -97,6 +117,87 @@ Contacto Menus::listado(std::vector<Contacto&> lista) {
 	}while(!selValida);
 
 	return seleccion;
+}
+
+int Menus::visionado(Contacto& c) {
+	std::vector<std::string> telefonos = c.getTelefonos();
+	std::vector<Direccion> direcciones = c.getDirecciones();
+	std::vector<CuentaRedSocial> redes = c.getRedes();
+
+	limpiaPantalla();
+	std::cout <<	"Apellidos: " << c.getApellidos() << std::endl <<
+					"Nombre: " << c.getNombre() << std::endl <<
+					"DNI: " << c.getDNI() << std::endl;
+
+	//Imprime teléfonos
+	for(int i = 0 ; i < telefonos.size() ; ++i){
+		std::cout <<	"Telefono " << (i+1) << ": " << telefonos.at(i) << std::endl;
+	}
+
+	std::cout << "Correo electrónico: " << c.getCorreoE() << std::endl;
+
+	//Imprime direcciones
+	for(int i=0 ; i < direcciones.size() ; ++i){
+		std::cout << "Dirección " << (i+1) << ": " << direcciones.at(i) << std::endl;
+	}
+
+	//Imprime redes
+	for(int i=0 ; i < redes.size() ; ++i){
+		std::string nombreRed;
+		switch(redes.at(i)){
+		case facebook:
+			nombreRed = "Facebook";
+			break;
+		case twitter:
+			nombreRed = "Twitter";
+			break;
+		case googleplus:
+			nombreRed = "Goolge+";
+			break;
+		}
+
+		std::cout << "Cuenta de " << nombreRed << ": " << redes.at(i).usuario << std::endl;
+	}
+
+	std::string fav = c.getFavorito()?"Sí":"No";
+	std::cout <<	"Notas: " << c.getNotas() << std::endl <<
+					"¿Es favorito?: " << fav << std::endl << std::endl;
+
+	//Selección de qué hacer con el contacto
+	int seleccionUsuario;
+	std::string aux;
+
+	std::cout <<	"¿Qué quieres hacer?" << std::endl <<
+					"m: Modificar contacto" << std::endl <<
+					"b: Borrar contacto" << std::endl <<
+					"a: Volver al menú principal" << std::endl << std::endl;
+
+	bool selValida; //¿Es la selección válida?
+	do{
+		selValida = true;
+		std::cout << "--> ";
+		std::cin >> aux;
+
+		switch(tolower(aux.at(0))){
+		case 'm':
+			seleccionUsuario = MENU_MODIFICAR_CONTACTO;
+			break;
+		case 'b':
+			seleccionUsuario = MENU_BORRAR_CONTACTO;
+			break;
+		case 'a':
+			seleccionUsuario = MENU_ATRAS;
+			break;
+
+		default:
+			selValida = false;
+			std::cout << "Selección inválida" << std::endl;
+		}
+	}while(!selValida);
+
+	//Finalmente se decide qué valor se devolverá
+
+	return seleccionUsuario;
 }
 
 Contacto Menus::addContacto() {
@@ -246,11 +347,12 @@ Contacto Menus::addContacto() {
 }
 
 int Menus::copiaSeguridad() {
+	int seleccionUsuario;
+
 	limpiaPantalla();
 	imprimeTitulo();
 
 	std::string aux;
-	std::list<char> caracValidos = {'c','r','e','a'};
 
 	std::cout << std::endl <<
 				"c: crear copia de seguridad" << std::endl <<
@@ -263,18 +365,33 @@ int Menus::copiaSeguridad() {
 				std::endl <<
 				std::endl;
 
-		bool selValida = true; //¿Es la selección válida?
-		do{
-			std::cout << "--> ";
-			std::cin >> aux;
+	bool selValida; //¿Es la selección válida?
+	do{
+		selValida = true;
+		std::cout << "--> ";
+		std::cin >> aux;
 
-			selValida = comprobarEntradaValida(caracValidos,aux.at(0));
-			if(!selValida){
-				std::cout << "Selección inválida" << std::endl;
-			}
-		}while(!selValida);
+		switch(tolower(aux.at(0))){
+		case 'c':
+			seleccionUsuario = MENU_CREAR_COPIA;
+			break;
+		case 'r':
+			seleccionUsuario = MENU_RESTAURAR_COPIA;
+			break;
+		case 'e':
+			seleccionUsuario = MENU_ELIMINAR_COPIA;
+			break;
+		case 'a':
+			seleccionUsuario = MENU_ATRAS;
+			break;
 
-		return(tolower(aux.at(0)));
+		default:
+			selValida = false;
+			std::cout << "Selección inválida" << std::endl;
+		}
+	}while(!selValida);
+
+	return seleccionUsuario;
 }
 
 bool Menus::crearCopiaSeguridad() {
@@ -314,7 +431,7 @@ bool Menus::crearCopiaSeguridad() {
 }
 
 std::string Menus::restaurarCopiaSeguridad() {
-	std::list<std::string> copiasGuardadas = GestorBackup::getListaCopiasSeguridad();
+	std::vector<std::string> copiasGuardadas = GestorBackup::getListaCopiasSeguridad();
 	std::string aux;
 	bool restaurar = false;
 	int seleccion;
@@ -323,7 +440,7 @@ std::string Menus::restaurarCopiaSeguridad() {
 	limpiaPantalla();
 	std::cout << "Esta es la lista de las copias de seguridad guardadas:" << std::endl << std::endl;
 
-	std::list<std::string>::iterator i;
+	std::vector<std::string>::iterator i;
 	int cuenta;
 
 	for(i = copiasGuardadas.begin() , cuenta=1; i != copiasGuardadas.end() ; ++i , ++cuenta){
@@ -359,7 +476,50 @@ std::string Menus::restaurarCopiaSeguridad() {
 	return nombreRestauracion;
 }
 
-void Menus::eliminarCopiaSeguridad() {
+std::string Menus::eliminarCopiaSeguridad() {
+	std::list<std::string> copiasGuardadas = GestorBackup::getListaCopiasSeguridad();
+	std::string aux;
+	bool restaurar = false;
+	int seleccion;
+	std::string nombreBorrar; //Nombre de la copia a borrar (lo que la funcion devolverá)
+
+	limpiaPantalla();
+	std::cout << "Esta es la lista de las copias de seguridad guardadas:" << std::endl << std::endl;
+
+	std::list<std::string>::iterator i;
+	int cuenta;
+
+	for(i = copiasGuardadas.begin() , cuenta=1; i != copiasGuardadas.end() ; ++i , ++cuenta){
+		std::cout << cuenta << ") " << (*i) << std::endl;
+	}
+
+	std::cout << std::endl <<	"¿Deseas eliminar alguna de ellas? (s/N)" << std::endl <<
+								"--> ";
+	std::cin >> aux;
+	if(aux.size() == 1 && tolower(aux.at(0)) == 's') restaurar = true;
+
+	if(restaurar){
+		std::cout <<	"¿Cuál deseas eliminar?" << std::endl;
+
+		bool selValida = true; //¿Es la selección válida?
+		do{
+			std::cout << "--> ";
+			std::cin >> aux;
+
+			seleccion = atoi(aux.c_str());
+
+			selValida = seleccion > 0 && seleccion <= copiasGuardadas.size();
+			if(!selValida){
+				std::cout << "Selección inválida" << std::endl;
+			}
+		}while(!selValida);
+
+		//Asignamos al valor devuelto la seleccion del usuario
+		i = copiasGuardadas.begin();
+		nombreBorrar = *(i+(seleccion-1));
+	}
+
+	return nombreBorrar;
 }
 
 std::string Menus::formatoLegible() {
@@ -368,6 +528,10 @@ std::string Menus::formatoLegible() {
 std::list<Cambio> Menus::modificarContacto() {
 }
 
+bool Menus::borrarContacto() {
+}
+
+
 void Menus::limpiaPantalla() {
 	system("clear");
 }
@@ -375,9 +539,6 @@ void Menus::limpiaPantalla() {
 void Menus::imprimeTitulo() {
 	std::cout <<	"Agenda contactos" << std::endl <<
 					"====================" << std::endl << std::endl;
-}
-
-bool Menus::borrarContacto() {
 }
 
 bool Menus::comprobarEntradaValida(std::list<char> caracValidos, char c) {

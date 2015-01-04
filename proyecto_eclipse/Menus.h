@@ -14,6 +14,20 @@
 
 #define CONTACTOS_MAS_USADOS 5 //Número de contactos más usados que se utilizarán en el menú principal
 
+#define MENU_ANADIR_CONTACTO -1
+#define MENU_BUSCAR_CONTACTO_APELLIDO -2
+#define MENU_MOSTRAR_FAVORITOS -3
+#define MENU_COPIAS_SEGURIDAD -4
+#define MENU_FORMATO_TEXTO -5
+
+#define MENU_CREAR_COPIA -1
+#define MENU_RESTAURAR_COPIA -2
+#define MENU_ELIMINAR_COPIA -3
+#define MENU_ATRAS -4
+
+#define MENU_MODIFICAR_CONTACTO -1
+#define MENU_BORRAR_CONTACTO -2
+
 namespace agenda {
 
 class Menus {
@@ -24,10 +38,14 @@ private:
 	static std::string getNombreCSActual();
 
 public:
+	//Menú principal:
+	//-Devuelve:
+	//
 	static int principal(std::vector<Contacto> masUsados);
 
 	static std::string busqueda();
-	static Contacto listado(std::vector<Contacto&> lista);
+	static int listado(std::vector<Contacto&> lista);
+	static int visionado(Contacto &c); //Muestra por pantalla el contacto y devuelve la opción seleccionada
 
 	static Contacto addContacto();
 	static std::list<Cambio>  modificarContacto();
@@ -36,7 +54,7 @@ public:
 	static int copiaSeguridad();
 	static bool crearCopiaSeguridad();
 	static std::string restaurarCopiaSeguridad();
-	static void eliminarCopiaSeguridad();
+	static std::string eliminarCopiaSeguridad();
 
 	static std::string formatoLegible();
 };

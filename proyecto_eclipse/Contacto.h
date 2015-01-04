@@ -18,6 +18,13 @@ struct Cambio{
 
 };
 
+struct Direccion{
+	std::string calle;
+	int numero;
+	int piso;
+	int puerta;
+};
+
 struct CuentaRedSocial{
 	tipoRed red;
 	std::string usuario;
@@ -64,6 +71,14 @@ public:
 
 	void setNombre(const std::string& nombre) {
 		this->nombre = nombre;
+	}
+
+	const bool getFavorito() const{
+		return true;
+	}
+
+	const std::string getNotas() const{
+		return "";
 	}
 };
 
