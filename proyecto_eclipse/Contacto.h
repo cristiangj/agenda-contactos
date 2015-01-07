@@ -88,7 +88,7 @@ class Contacto {
 		inline std::vector <std::string> getTelefonos () {return telefonos_;};
 
 		bool setDireccion (Direccion dir);
-		inline std::vector <Direccion> getDireccion () {return direcciones_;};
+		inline std::vector <Direccion> getDirecciones () {return direcciones_;};
 
 		bool setRed (CuentaRedSocial red);
 		inline std::vector <CuentaRedSocial> getRedes () {return redes_;};
