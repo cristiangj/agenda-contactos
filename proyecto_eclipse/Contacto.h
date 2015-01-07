@@ -1,9 +1,12 @@
-#ifndef CONTACTO_H
-#define CONTACTO_H
+/*
+ * Contacto.h
+ *
+ *  Created on: 10/12/2014
+ *      Author: Enrique
+ */
 
-#include <iostream>
-#include <string>
-#include <vector>
+#ifndef CONTACTO_H_
+#define CONTACTO_H_
 
 #define CAMPO_NOMBRE 1
 #define CAMPO_APELLIDO 2
@@ -16,12 +19,16 @@
 #define CAMPO_CONSULTA 9
 #define CAMPO_RED 10
 
-using namespace std;
+#include <string>
+#include <vector>
+#include <list>
+
+namespace agenda {
 
 enum tipoRed {twitter, facebook, googleplus};
 
 struct Direccion {
-	string calle;
+	std::string calle;
 	int numero;
 	int piso;
 	int puerta;
@@ -29,45 +36,46 @@ struct Direccion {
 
 struct CuentaRedSocial {
 	tipoRed red;
-	string usuario;
+	std::string usuario;
 };
 
 struct Cambio {
 	int idCampo;
-	string valor;
+	std::string valor;
+	int valorN;
 };
 
 class Contacto {
 	private:
-		string nombre_;
-		string apellidos_;
-		string dni_;
-		vector <string> telefonos_;
-		string correoE_;
-		vector <Direccion> direcciones_;
-		string anotaciones_;
+		std::string nombre_;
+		std::string apellidos_;
+		std::string dni_;
+		std::vector <std::string> telefonos_;
+		std::string correoE_;
+		std::vector <Direccion> direcciones_;
+		std::string anotaciones_;
 		bool favoritos_;
 		int nconsultas_;
-		vector <CuentaRedSocial> redes_;
+		std::vector <CuentaRedSocial> redes_;
 
 	public:
-		Contacto (string nombre="", string apellidos="", string dni="", string correoe="", string anotaciones="", bool favoritos="", int nconsultas=0);
+		Contacto (std::string nombre="", std::string apellidos="", std::string dni="", std::string correoe="", std::string anotaciones="", bool favoritos="", int nconsultas=0);
 
-		void setNombre (string nombre);
-		inline string getNombre () {return nombre_;};
+		void setNombre (std::string nombre);
+		inline std::string getNombre () {return nombre_;};
 
-		bool setApellidos (string apellidos);
-		inline string getApellidos () {return apellidos_;};
-		inline string getApellidosyNombre () {return (apellidos_+", "+nombre_);};
+		bool setApellidos (std::string apellidos);
+		inline std::string getApellidos () {return apellidos_;};
+		inline std::string getApellidosyNombre () {return (apellidos_+", "+nombre_);};
 
-		bool setDni (string dni);
-		inline string getDni () {return dni_;};
+		bool setDni (std::string dni);
+		inline std::string getDni () {return dni_;};
 
-		bool setCorreoE (string correoe);
-		inline string getCorreoE () {return correoE_;};
+		bool setCorreoE (std::string correoe);
+		inline std::string getCorreoE () {return correoE_;};
 
-		void setAnotaciones (string anotaciones);
-		inline string getAnotaciones () {return anotaciones_;};
+		void setAnotaciones (std::string anotaciones);
+		inline std::string getAnotaciones () {return anotaciones_;};
 
 		void setFavoritos (bool favoritos);
 		inline bool getFavoritos () {return favoritos_;};
@@ -76,16 +84,19 @@ class Contacto {
 		inline int getNconsultas () {return nconsultas_;};
 		void anadirNconsultas ();
 
-		bool setTelefono (string telefono);
-		inline vector <string> getTelefonos () {return telefonos_;};
+		bool setTelefono (std::string telefono);
+		inline std::vector <std::string> getTelefonos () {return telefonos_;};
 
 		bool setDireccion (Direccion dir);
-		inline vector <Direccion> getDireccion () {return direcciones_;};
+		inline std::vector <Direccion> getDireccion () {return direcciones_;};
 
 		bool setRed (CuentaRedSocial red);
-		inline vector <CuentaRedSocial> getRedes () {return redes_;};
+		inline std::vector <CuentaRedSocial> getRedes () {return redes_;};
 
-		bool modificar (list<Cambio> cambios);
-}
+		void modificar (std::list<Cambio> cambios);
+};
 
-#endif
+} /* namespace agenda */
+
+#endif /* CONTACTO_H_ */
+

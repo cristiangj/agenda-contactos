@@ -1,9 +1,18 @@
-#include "contacto.h"
+/*
+ * Contacto.cpp
+ *
+ *  Created on: 10/12/2014
+ *      Author: Enrique
+ */
+
+#include "Contacto.h"
 #include <string>
 #include <vector>
 #include <list>
 
-Contacto::Contacto (string nombre, string apellidos, string dni, string correoe, string anotaciones, bool favoritos, int nconsultas) {
+namespace agenda {
+
+Contacto::Contacto (std::string nombre, std::string apellidos, std::string dni, std::string correoe, std::string anotaciones, bool favoritos, int nconsultas) {
 	nombre_=nombre;
 	apellidos_=apellidos;
 	dni_=dni;
@@ -15,12 +24,12 @@ Contacto::Contacto (string nombre, string apellidos, string dni, string correoe,
 }
 
 
-void Contacto::setNombre (string nombre) {
+void Contacto::setNombre (std::string nombre) {
 	nombre_=nombre;
 }
 
 
-bool Contacto::setApellidos (string apellidos) {
+bool Contacto::setApellidos (std::string apellidos) {
 	if (!apellidos.empty()) {
 		apellidos_=apellidos;
 		return true;
@@ -31,7 +40,7 @@ bool Contacto::setApellidos (string apellidos) {
 }
 
 
-bool Contacto::setDni (string dni) {
+bool Contacto::setDni (std::string dni) {
 	int tam=dni.length();
 
 	if (tam==9) {
@@ -44,7 +53,7 @@ bool Contacto::setDni (string dni) {
 }
 
 
-bool Contacto::setCorreoE (string correoe) {
+bool Contacto::setCorreoE (std::string correoe) {
 	int tam=correoe.length();
 	int pos=correoe.find("@");
 	int pos2=correoe.find(".",pos);
@@ -59,7 +68,7 @@ bool Contacto::setCorreoE (string correoe) {
 }
 
 
-void Contacto::setAnotaciones (string anotaciones) {
+void Contacto::setAnotaciones (std::string anotaciones) {
 	anotaciones_=anotaciones;
 }
 
@@ -77,7 +86,7 @@ void Contacto::anadirNconsultas () {
 }
 
 
-bool Contacto::setTelefono (string telefono) {
+bool Contacto::setTelefono (std::string telefono) {
 	int tam=telefono.length();
 
 	if (tam==9) {
@@ -107,54 +116,65 @@ bool Contacto::setRed (CuentaRedSocial red) {
 }
 
 
-bool Contacto::modificar (list<Cambio> cambios) {
-	list <Cambio> cambios {
-		list <Cambio>::iterator i;
-		for (i=cambios.begin(); i!=cambios.end(); i++) {
+void Contacto::modificar (std::list<Cambio> cambios) {
 
-			switch(i->idcampo) {
-			case CAMPO_NOMBRE:
-				setNombre(i->valor);
-			break;
+	std::list <Cambio>::iterator i;
+	for (i=cambios.begin(); i!=cambios.end(); i++) {
 
-			case CAMPO_APELLIDO:
-				setApellidos(i->valor);
-			break;
+		switch(i->idCampo) {
+		case CAMPO_NOMBRE:
+			setNombre(i->valor);
+		break;
 
-			case CAMPO_DNI:
-				setDni(i->valor);
-			break;
+		case CAMPO_APELLIDO:
+			setApellidos(i->valor);
+		break;
 
-			case CAMPO_TELEFONO:
-				setTelefono(i->valor);
-			break;
+		case CAMPO_DNI:
+			setDni(i->valor);
+		break;
 
-			case CAMPO_CORREOE:
-				setCorreoE(i->valor);
-			break;
+		case CAMPO_TELEFONO:
+			setTelefono(i->valor);
+		break;
 
-			case CAMPO_DIRECCION:
-				setDireccion(i->valor);
-			break;
+		case CAMPO_CORREOE:
+			setCorreoE(i->valor);
+		break;
 
-			case CAMPO_ANOTACION:
-				setAnotaciones(i->valor);
-			break;
+		case CAMPO_DIRECCION:
+			Direccion d;
+			d.calle = i->valor;
+			d.numero = i -> valorN;
 
-			case CAMPO_FAVORITOS:
-				setFavoritos(i->valor);
-			break;
+			setDireccion(d);
+		break;
 
-			case CAMPO_CONSULTA:
-				setNconsultas(i->valor);
-			break;
+		case CAMPO_ANOTACION:
+			setAnotaciones(i->valor);
+		break;
 
-			case CAMPO_RED:
-				setRedes(i->valor);
-			break;
+		case CAMPO_FAVORITOS:
+			bool fav;
+
+			if(i->valor.compare("true") == 0) fav = true;
+			else fav = false;
+
+			setFavoritos(fav);
+		break;
+
+		case CAMPO_RED:
+			CuentaRedSocial r;
+			r.usuario = i->valor;
+			r.red = i->valorN;
+
+			setRed(r);
+		break;
 
 		}
 
-		}
 	}
 }
+
+} /* namespace agenda */
+
