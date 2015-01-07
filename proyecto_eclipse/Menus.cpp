@@ -37,7 +37,7 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 			"f: Mostrar contactos favoritos" << std::endl <<
 			"c: Copias de seguridad" << std::endl <<
 			"t: Generar una agenda en formato de texto" << std::endl <<
-			"" << std::endl <<
+			std::endl <<
 			"Introduce un número para acceder a uno de los contactos" << std::endl <<
 			"más usados o introduce una letra para una de las opciones" << std::endl <<
 			std::endl <<
@@ -124,10 +124,12 @@ int Menus::visionado(Contacto& c) {
 	std::vector<Direccion> direcciones = c.getDirecciones();
 	std::vector<CuentaRedSocial> redes = c.getRedes();
 
+	c.anadirNconsultas();
+
 	limpiaPantalla();
 	std::cout <<	"Apellidos: " << c.getApellidos() << std::endl <<
 					"Nombre: " << c.getNombre() << std::endl <<
-					"DNI: " << c.getDNI() << std::endl;
+					"DNI: " << c.getDni() << std::endl;
 
 	//Imprime teléfonos
 	for(int i = 0 ; i < telefonos.size() ; ++i){
@@ -159,8 +161,8 @@ int Menus::visionado(Contacto& c) {
 		std::cout << "Cuenta de " << nombreRed << ": " << redes.at(i).usuario << std::endl;
 	}
 
-	std::string fav = c.getFavorito()?"Sí":"No";
-	std::cout <<	"Notas: " << c.getNotas() << std::endl <<
+	std::string fav = c.getFavoritos()?"Sí":"No";
+	std::cout <<	"Notas: " << c.getAnotaciones() << std::endl <<
 					"¿Es favorito?: " << fav << std::endl << std::endl;
 
 	//Selección de qué hacer con el contacto
@@ -232,7 +234,7 @@ Contacto Menus::addContacto() {
 	do{
 		std::cout << "DNI: ";
 		std::cin >> aux;
-		valido = c.setDNI(aux);
+		valido = c.setDni(aux);
 
 		if(!valido) std::cout << "Selección inválida" << std::endl;
 	}while(!valido);
@@ -270,6 +272,7 @@ Contacto Menus::addContacto() {
 		valido = true;
 		std::cout << "Dirección " << (i+1) << ": ";
 		std::cin >> aux;
+		//TODO : Corregir entrada de direcciones
 
 		if(aux.size() != 0){ //Si el usuario no introduce nada, no se introduce ninguna dirección más
 			valido = c.setDireccion(aux);
@@ -330,18 +333,18 @@ Contacto Menus::addContacto() {
 	std::cout << "¿Deseas que el contacto aparezca en tu lista de favoritos? (s/N): ";
 	std::cin >> aux;
 	if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
-		c.setFavorito(true);
+		c.setFavoritos(true);
 		std::cout << "El contacto aparecerá en tu lista de favoritos" << std::endl;
 	}
 	else{
-		c.setFavorito(false);
+		c.setFavoritos(false);
 		std::cout << "El contacto NO aparecerá en tu lista de favoritos" << std::endl;
 	}
 
 	//Anotación
 	std::cout << "Añade a continuación cualquier anotación que quieras hacer sobre el usuario (puedes dejarlo en blanco):" << std::endl;
 	std::cin >> aux;
-	c.setAnotacion(aux);
+	c.setAnotaciones(aux);
 
 	return c;
 }
