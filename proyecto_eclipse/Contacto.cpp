@@ -24,8 +24,10 @@ Contacto::Contacto (std::string nombre, std::string apellidos, std::string dni, 
 }
 
 
-void Contacto::setNombre (std::string nombre) {
+
+bool Contacto::setNombre (std::string nombre) {
 	nombre_=nombre;
+	return true;
 }
 
 
@@ -115,65 +117,28 @@ bool Contacto::setRed (CuentaRedSocial red) {
 	return true;
 }
 
+std::string Contacto::getNombreRed(tipoRed t){
+	std::string nombre;
 
-void Contacto::modificar (std::list<Cambio> cambios) {
-
-	std::list <Cambio>::iterator i;
-	for (i=cambios.begin(); i!=cambios.end(); i++) {
-
-		switch(i->idCampo) {
-		case CAMPO_NOMBRE:
-			setNombre(i->valor);
+	switch(t){
+	case twitter:
+		nombre = "Twitter";
 		break;
 
-		case CAMPO_APELLIDO:
-			setApellidos(i->valor);
+	case facebook:
+		nombre = "Facebook";
 		break;
 
-		case CAMPO_DNI:
-			setDni(i->valor);
+	case googleplus:
+		nombre = "Goole +";
 		break;
 
-		case CAMPO_TELEFONO:
-			setTelefono(i->valor);
+	default:
+		nombre = "Red desconocida";
 		break;
-
-		case CAMPO_CORREOE:
-			setCorreoE(i->valor);
-		break;
-
-		case CAMPO_DIRECCION:
-			Direccion d;
-			d.calle = i->valor;
-			d.numero = i -> valorN;
-
-			setDireccion(d);
-		break;
-
-		case CAMPO_ANOTACION:
-			setAnotaciones(i->valor);
-		break;
-
-		case CAMPO_FAVORITOS:
-			bool fav;
-
-			if(i->valor.compare("true") == 0) fav = true;
-			else fav = false;
-
-			setFavoritos(fav);
-		break;
-
-		case CAMPO_RED:
-			CuentaRedSocial r;
-			r.usuario = i->valor;
-			r.red = i->valorN;
-
-			setRed(r);
-		break;
-
-		}
-
 	}
+
+	return nombre;
 }
 
 } /* namespace agenda */
