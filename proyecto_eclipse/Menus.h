@@ -49,7 +49,7 @@ public:
 	static int visionado(Contacto &c); //Muestra por pantalla el contacto y devuelve la opción seleccionada
 
 	static Contacto addContacto();
-	static void  modificarContacto(Contacto &c);
+	static Contacto  modificarContacto(const Contacto &con);
 	static bool borrarContacto();
 
 	static int copiaSeguridad();

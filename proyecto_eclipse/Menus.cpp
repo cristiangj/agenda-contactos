@@ -560,12 +560,14 @@ void Menus::formatoLegible() {
 	aux = getEntrada(); //Pausa en el programa.
 }
 
-void Menus::modificarContacto(Contacto &c) {
+Contacto Menus::modificarContacto(const Contacto &con){
 	std::string aux;
 	int auxN;
 	bool seguir = true;
 	int selec;
 	bool valido;
+	
+	Contacto c = con; //Copia del contacto que se modificará
 
 	//Datos auxiliares
 	std::vector<std::string> telfs;
@@ -786,6 +788,8 @@ void Menus::modificarContacto(Contacto &c) {
 		if(aux.size() == 1 && tolower(aux.at(0)) == 'n') seguir = false;
 		else seguir = true;
 	}while(seguir);
+
+	return c;
 }
 
 bool Menus::borrarContacto() {
