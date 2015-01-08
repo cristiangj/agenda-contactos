@@ -35,6 +35,8 @@ private:
 	static bool comprobarEntradaValida(std::list<char> caracValidos, char c); //Recibe una lista de caracteres y comprueba si el caracter en cuestión está incluido
 	static void limpiaPantalla(); //Limpia la pantalla del terminal
 	static void imprimeTitulo(); //Imprime el encabezado de la aplicación
+	static std::string getEntrada(); //Toma una línea de entrada del teclado (cin)
+	static int getEntradaInt(); //Toma un entero del teclado (y limpia cin)
 
 public:
 	//Menú principal:
@@ -43,7 +45,7 @@ public:
 	static int principal(std::vector<Contacto> masUsados);
 
 	static std::string busqueda();
-	static int listado(std::vector<Contacto&> lista);
+	static int listado(std::vector<Contacto> lista);
 	static int visionado(Contacto &c); //Muestra por pantalla el contacto y devuelve la opción seleccionada
 
 	static Contacto addContacto();

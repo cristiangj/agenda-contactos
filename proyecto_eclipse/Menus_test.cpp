@@ -7,6 +7,11 @@
 
 #include "Menus.h"
 
-namespace agenda {
+using namespace agenda;
 
-} /* namespace agenda */
+int main(){
+	Contacto c;
+	c = Menus::addContacto();
+
+	Menus::visionado(c);
+}
