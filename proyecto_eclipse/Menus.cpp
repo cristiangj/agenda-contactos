@@ -20,9 +20,6 @@
 
 namespace agenda{
 
-<<<<<<< HEAD
-char Menus::principal(std::list<Contacto> masUsados) {
-=======
 int Menus::principal(std::vector<Contacto> masUsados) {
 	std::string aux;
 	int seleccionUsuario; //Lo que en última instancia devolverá la función, la selección del usuario codificada
@@ -88,7 +85,6 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 	//Finalmente se decide qué valor se devolverá
 
 	return seleccionUsuario;
->>>>>>> menus
 }
 
 std::string Menus::busqueda() {
