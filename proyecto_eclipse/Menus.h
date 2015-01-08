@@ -35,7 +35,6 @@ private:
 	static bool comprobarEntradaValida(std::list<char> caracValidos, char c); //Recibe una lista de caracteres y comprueba si el caracter en cuestión está incluido
 	static void limpiaPantalla(); //Limpia la pantalla del terminal
 	static void imprimeTitulo(); //Imprime el encabezado de la aplicación
-	static std::string getNombreCSActual();
 
 public:
 	//Menú principal:
@@ -48,7 +47,7 @@ public:
 	static int visionado(Contacto &c); //Muestra por pantalla el contacto y devuelve la opción seleccionada
 
 	static Contacto addContacto();
-	static std::list<Cambio>  modificarContacto();
+	static void  modificarContacto(Contacto &c);
 	static bool borrarContacto();
 
 	static int copiaSeguridad();
@@ -56,7 +55,7 @@ public:
 	static std::string restaurarCopiaSeguridad();
 	static std::string eliminarCopiaSeguridad();
 
-	static std::string formatoLegible();
+	static void formatoLegible();
 };
 
 } /* namespace agenda */

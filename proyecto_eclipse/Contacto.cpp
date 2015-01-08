@@ -177,3 +177,27 @@ void Contacto::modificar (std::list<Cambio> cambios) {
 }
 
 } /* namespace agenda */
+
+std::string getNombreRed(tipoRed t){
+	std::string nombre;
+
+	switch(t){
+	case twitter:
+		nombre = "Twitter";
+		break;
+
+	case facebook:
+		nombre = "Facebook";
+		break;
+
+	case googleplus:
+		nombre = "Goole +";
+		break;
+
+	default:
+		nombre = "Red desconocida";
+		break;
+	}
+
+	return nombre;
+}

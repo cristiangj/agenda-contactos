@@ -209,6 +209,7 @@ Contacto Menus::addContacto() {
 				"(Los datos marcados con (*) son obligatorios)" << std::endl;
 
 	std::string aux;
+	int auxN;
 	bool valido;
 	Contacto c;
 
@@ -270,12 +271,18 @@ Contacto Menus::addContacto() {
 	i = 0;
 	do{
 		valido = true;
-		std::cout << "Dirección " << (i+1) << ": ";
+		std::cout <<	"Dirección " << (i+1) << ": " <<
+						"Calle: ";
 		std::cin >> aux;
-		//TODO : Corregir entrada de direcciones
+		std::cout <<	"Número: ";
+		std::cin >> auxN;
+
+		Direccion d;
+		d.calle = aux;
+		d.numero = auxN;
 
 		if(aux.size() != 0){ //Si el usuario no introduce nada, no se introduce ninguna dirección más
-			valido = c.setDireccion(aux);
+			valido = c.setDireccion(d);
 
 			if(!valido){
 				std::cout << "Selección inválida" << std::endl;
@@ -403,7 +410,7 @@ bool Menus::crearCopiaSeguridad() {
 	std::list<char> caracValidos = {'s','n'};
 	bool seleccion;
 
-	nombreCS = getNombreCSActual();
+	nombreCS = GestorBackup::dameFecha();
 
 	limpiaPantalla();
 	std::cout <<	"La copia de seguridad se guardará con el siguiente nombre:" << std::endl << std::endl <<
@@ -496,42 +503,286 @@ std::string Menus::eliminarCopiaSeguridad() {
 		std::cout << cuenta << ") " << (*i) << std::endl;
 	}
 
-	std::cout << std::endl <<	"¿Deseas eliminar alguna de ellas? (s/N)" << std::endl <<
+	std::cout <<	"¿Cuál deseas eliminar?" << std::endl;
+
+	bool selValida = true; //¿Es la selección válida?
+	do{
+		std::cout << "--> ";
+		std::cin >> aux;
+
+		seleccion = atoi(aux.c_str());
+
+		selValida = seleccion > 0 && seleccion <= copiasGuardadas.size();
+		if(!selValida){
+			std::cout << "Selección inválida" << std::endl;
+		}
+	}while(!selValida);
+
+	//Asignamos al valor devuelto la seleccion del usuario
+	i = copiasGuardadas.begin();
+	nombreBorrar = *(i+(seleccion-1));
+
+	std::cout << std::endl <<	"Se eliminará \"" << nombreBorrar << "\"" << std::endl <<
+								"¿Está seguro de que quiere eliminarla? (s/N)" << std::endl <<
 								"--> ";
 	std::cin >> aux;
-	if(aux.size() == 1 && tolower(aux.at(0)) == 's') restaurar = true;
+	if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
 
-	if(restaurar){
-		std::cout <<	"¿Cuál deseas eliminar?" << std::endl;
-
-		bool selValida = true; //¿Es la selección válida?
-		do{
-			std::cout << "--> ";
-			std::cin >> aux;
-
-			seleccion = atoi(aux.c_str());
-
-			selValida = seleccion > 0 && seleccion <= copiasGuardadas.size();
-			if(!selValida){
-				std::cout << "Selección inválida" << std::endl;
-			}
-		}while(!selValida);
-
-		//Asignamos al valor devuelto la seleccion del usuario
-		i = copiasGuardadas.begin();
-		nombreBorrar = *(i+(seleccion-1));
+	}
+	else{
+		nombreBorrar.clear();
+		std::cout << "La copia de seguridad no se eliminará";
+		std::cin >> aux; //Pausa del programaS
 	}
 
 	return nombreBorrar;
 }
 
-std::string Menus::formatoLegible() {
+void Menus::formatoLegible() {
+	limpiaPantalla();
+	std::string aux;
+
+	std::cout << "Se creó un fichero \"Mi_agenda.txt\" con el contenido de la agenda";
+	std::cin >> aux; //Pausa en el programa.
 }
 
-std::list<Cambio> Menus::modificarContacto() {
+void Menus::modificarContacto(Contacto &c) {
+	std::string aux;
+	int auxN;
+	bool seguir = true;
+	int selec;
+	bool valido;
+
+	do{
+		limpiaPantalla();
+		std::cout <<	"¿Qué campo desea modificar?:" << std::endl <<
+						"1) Nombre" << std::endl <<
+						"2) Apellido" << std::endl <<
+						"3) DNI" << std::endl <<
+						"4) Añadir teléfono" << std::endl <<
+						"5) Eliminar teléfono" << std::endl <<
+						"6) Correo electrónico" << std::endl <<
+						"7) Añadir dirección" << std::endl <<
+						"8) Eliminar dirección" << std::endl <<
+						"9) Añadir red social" << std::endl <<
+						"10)Eliminar red social" << std::endl <<
+						"11) Notas" << std::endl <<
+						"12) Favorito" << std::endl <<
+						"13) Salir" << std::endl << std::endl <<
+						"--> ";
+		std::cin >> aux;
+		selec = atoi(aux.c_str());
+		switch(selec){
+		case 1: //Nombre
+			do{
+				std::cout << "Nuevo nombre: ";
+				std::cin >> aux;
+				valido = c.setNombre(aux);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 2: //Apellido
+			do{
+				std::cout << "Nuevo apellido: ";
+				std::cin >> aux;
+				valido = c.setApellidos(aux);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 3: //DNI
+			do{
+				std::cout << "Nuevo DNI: ";
+				std::cin >> aux;
+				valido = c.setDni(aux);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 4: //Añadir telefono
+			do{
+				std::cout << "Nuevo teléfono: ";
+				std::cin >> aux;
+				valido = c.setTelefono(aux);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 5: //Eliminar telefono
+			std::vector<std::string> telfs = c.getTelefonos();
+			if(telfs.empty()){
+				std::cout << "No hay teléfonos registrados" << std::endl;
+				std::cin >> aux;
+				break;
+			}
+
+			std::cout << "Lista de teléfonos:" << std::endl;
+
+			for(int i=0 ; i < telfs.size() ; ++i){
+				std::cout << (i+1) << ") " << telfs.at(i) << std::endl;
+			}
+			std::cout << "¿Cuál deseas eliminar?: ";
+			std::cin >> auxN;
+			if(auxN > 0 && auxN <= telfs.size()) c.delTelefono(auxN-1);
+
+			break;
+
+		case 6: //Correo electrónico
+			do{
+				std::cout << "Nuevo correo-e: ";
+				std::cin >> aux;
+				valido = c.setCorreoE(aux);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 7: //Añadir dirección
+			Direccion d;
+			do{
+				std::cout <<	"Nueva dirección: " << std::endl <<
+								"Calle: ";
+				std::cin >> aux;
+				std::cout << 	"Número:";
+				std::cin >> auxN;
+
+				d.calle=aux;
+				d.numero=auxN;
+
+				valido = c.setDireccion(d);
+
+				if(!valido) std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 8: //Eliminar dirección
+			std::vector<Direccion> dirs = c.getDirecciones();
+			if(dirs.empty()){
+				std::cout << "No hay direcciones registradas" << std::endl;
+				std::cin >> aux;
+				break;
+			}
+
+			std::cout << "Lista de direcciones:" << std::endl;
+
+			for(int i=0 ; i < dirs.size() ; ++i){
+				std::cout << (i+1) << ") " << dirs.at(i).calle << ", " << dirs.at(i).numero << std::endl;
+			}
+			std::cout << "¿Cuál deseas eliminar?: ";
+			std::cin >> auxN;
+			if(auxN > 0 && auxN <= dirs.size()) c.delDireccion(auxN-1);
+			break;
+
+		case 9: //Añadir red social
+			CuentaRedSocial cuenta;
+
+			do{
+				valido = true;
+				std::cout << "¿Qué tipo de cuenta desea añadir?" << std::endl <<
+							"1) Facebook" << std::endl << "2) Twitter" << std::endl << "3) Google +" << std::endl <<
+							"--> " ;
+				std::cin >> auxN;
+				switch(auxN){
+				case 1:
+					cuenta.red = facebook;
+					break;
+				case 2:
+					cuenta.red = twitter;
+					break;
+				case 3:
+					cuenta.red = googleplus;
+					break;
+				default:
+					valido = false;
+				}
+
+				if(valido){
+					std::cout << "Nombre de usuario: ";
+					std::cin >> aux;
+					cuenta.usuario = aux;
+					valido = c.setRed(cuenta);
+				}
+
+				if(!valido)
+					std::cout << "Selección inválida" << std::endl;
+			}while(!valido);
+			break;
+
+		case 10: //Eliminar red social
+			std::vector<CuentaRedSocial> redes = c.getRedes();
+			if(redes.empty()){
+				std::cout << "No hay redes sociales registradas" << std::endl;
+				std::cin >> aux;
+				break;
+			}
+
+			std::string nobmreRed;
+			std::cout << "Lista de cuentas:" << std::endl;
+
+			for(int i=0 ; i < telfs.size() ; ++i){
+				std::cout << (i+1) << ") " << Contacto::getNombreRed(redes.at(i).red) << ": " << redes.at(i).usuario << std::endl;
+			}
+			std::cout << "¿Cuál deseas eliminar?: ";
+			std::cin >> auxN;
+			if(auxN > 0 && auxN <= redes.size()) c.delTelefono(auxN-1);
+			break;
+
+		case 11: //Notas
+			std::cout <<	"Anotación actual:" << std::endl <<
+							c.getAnotaciones() << std::endl << std::endl <<
+							"¿Quieres sobreescribirlas? (s/N)" << std::endl <<
+							"--> ";
+			std::cin >> aux;
+			if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
+				std::cout << "Introduzca la nueva anotación:" << std::endl;
+				std::cin >> aux;
+				c.setAnotaciones(aux);
+			}
+
+			break;
+
+		case 12: //Favorito
+			bool esFavorito = c.getFavoritos();
+			if(esFavorito) std::cout << "El contacto se encuentra en la lista de favoritos" << std::endl;
+			else std::cout << "El contacto NO se encuentra en la lista de favoritos" << std::endl;
+
+			std::cout <<	"¿Quiere cambiar esto? (s/N)" << std::endl <<
+							"--> ";
+			if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
+				c.setFavoritos(!esFavorito);
+			}
+			break;
+
+		case 13: //Salir
+			seguir = false;
+			break;
+		}
+
+		std::cout << "¿Quieres realizar algún otro cambio? (S/n)" << std::endl << "--> ";
+		std::cin >> aux;
+		if(aux.size() == 1 && tolower(aux.at(0)) == 'n') seguir = false;
+		else seguir = true;
+	}while(seguir);
 }
 
 bool Menus::borrarContacto() {
+	std::string aux;
+	bool eleccion;
+
+	std::cout << std::endl <<	"El contacto se eliminará y no podrá ser recuperado si no dispone de" << std::endl <<
+								"una copia de seguridad que lo incluya" << std::endl <<
+								"¿Está seguro de que quiere eliminarlo? (s/N)" << std::endl <<
+								"--> ";
+	std::cin >> aux;
+	if(aux.size() == 1 && tolower(aux.at(0)) == 's') eleccion = true;
+	else eleccion = false;
+
+	return eleccion;
 }
 
 
@@ -553,18 +804,6 @@ bool Menus::comprobarEntradaValida(std::list<char> caracValidos, char c) {
 	}
 
 	return valido;
-}
-
-//Sacado de http://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
-//aunque modificado
-std::string Menus::getNombreCSActual(){
-	time_t     now = time(0);
-	struct tm  tstruct;
-	char       buf[100];
-	tstruct = *localtime(&now);
-	sprintf(buf,"CS_%02d-%02d-%02d_%02d-%02d-%04d.dat", tstruct.tm_hour, tstruct.tm_min, tstruct.tm_sec, tstruct.tm_mday, tstruct.tm_mon+1, tstruct.tm_year+1900);
-
-	return buf;
 }
 
 }
