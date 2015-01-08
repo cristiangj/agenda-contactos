@@ -8,20 +8,6 @@
 #ifndef CONTACTO_H_
 #define CONTACTO_H_
 
-<<<<<<< HEAD
-#define CAMPO_NOMBRE 1
-#define CAMPO_APELLIDO 2
-#define CAMPO_DNI 3
-#define CAMPO_TELEFONO 4
-#define CAMPO_CORREOE 5
-#define CAMPO_DIRECCION 6
-#define CAMPO_ANOTACION	7
-#define CAMPO_FAVORITOS	8
-#define CAMPO_CONSULTA 9
-#define CAMPO_RED 10
-
-=======
->>>>>>> menus
 #include <string>
 #include <vector>
 #include <list>
@@ -64,11 +50,7 @@ class Contacto {
 	public:
 		Contacto (std::string nombre="", std::string apellidos="", std::string dni="", std::string correoe="", std::string anotaciones="", bool favoritos="", int nconsultas=0);
 
-<<<<<<< HEAD
-		void setNombre (std::string nombre);
-=======
 		bool setNombre (std::string nombre);
->>>>>>> menus
 		inline std::string getNombre () {return nombre_;};
 
 		bool setApellidos (std::string apellidos);
@@ -93,16 +75,7 @@ class Contacto {
 
 		bool setTelefono (std::string telefono);
 		inline std::vector <std::string> getTelefonos () {return telefonos_;};
-<<<<<<< HEAD
 
-		bool setDireccion (Direccion dir);
-		inline std::vector <Direccion> getDirecciones () {return direcciones_;};
-
-		bool setRed (CuentaRedSocial red);
-		inline std::vector <CuentaRedSocial> getRedes () {return redes_;};
-
-		void modificar (std::list<Cambio> cambios);
-=======
 		inline void delTelefono (int pos) {telefonos_.erase(telefonos_.begin() + pos);}; //Elimina el teléfono en la posicion indicada
 
 		bool setDireccion (Direccion dir);
@@ -114,7 +87,6 @@ class Contacto {
 		inline void delRed (int pos) {redes_.erase(redes_.begin() + pos);}; //Elimina la red en la posición indicada
 
 		static std::string getNombreRed(tipoRed t);
->>>>>>> menus
 };
 
 } /* namespace agenda */
