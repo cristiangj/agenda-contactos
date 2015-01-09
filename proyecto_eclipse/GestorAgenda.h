@@ -8,9 +8,9 @@
 #ifndef GESTORAGENDA_H_
 #define GESTORAGENDA_H_
 
-//incluir .h de la clase Contacto
-//incluir .h de la clase GestorBackup
-//incluir .h de la clase PersistenciaAgenda
+#include "Contacto.h"
+#include "GestorBackup.h"
+#include "PersistenciaAgenda.h"
 #include <list>
 #include <string>
 
@@ -40,7 +40,7 @@ private:
 	 * Función que compara el número de consultas de dos contactos
 	 * Necesaria para masUsados
 	 */
-	inline bool comparaConsultas(Contacto a, Contacto b) {if(a.getConsultas()>=b.getConsultas()) return true; else return false;};
+	bool comparaConsultas(Contacto a, Contacto b);
 
 	/*
 	 * Función que sustituye caracteres críticos para búsqueda de contactos por letras normales
@@ -84,9 +84,9 @@ public:
 	bool addContacto(Contacto c);
 
 	/*
-	 * Llama a la clase Contacto para que aplique modificaciones a un contacto
+	 * Se le pasa un contacto antes y después de modificarlo, buscando el viejo y reemplanzandolo en listaContactos_ por el nuevo
 	 */
-	inline bool modificarContacto(Contacto c, std::list<Cambio> cambios) {if (c.modificar(cambios)) return true; else return false;};
+	bool modificarContacto(Contacto nuevo, Contacto viejo);
 
 	/*
 	 * Borra un contacto si está en la lista
@@ -96,7 +96,7 @@ public:
 	/*
 	 * Llama a la clase GestorBackup para que presente los datos actuales de la agenda en un formato legible para el usuario
 	 */
-	bool imprimirTexto(std::string nombreFichero);
+	//bool imprimirTexto(std::string nombreFichero);
 
 }; /* class GestorAgenda */
 } /* namespace agenda */

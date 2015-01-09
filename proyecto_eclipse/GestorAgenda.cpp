@@ -74,6 +74,14 @@ int comparaNombres(Contacto a, Contacto b){
 
 
 
+bool comparaConsultas(Contacto a, Contacto b){
+	if(a.getNconsultas()>=b.getNconsultas()) return true;
+	else if(a.getNconsultas()<b.getNconsultas()) return false;
+	return (a.getNconsultas()>=b.getNconsultas());
+};
+
+
+
 
 bool GestorAgenda::addContacto(Contacto c){
 
@@ -89,6 +97,20 @@ bool GestorAgenda::addContacto(Contacto c){
 }
 
 
+bool GestorAgenda::modificarContacto(Contacto nuevo, Contacto viejo){
+
+	bool retorna=false;
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+		if(comparaNombres(*i, viejo)==A_IGUAL_B){
+			listaContactos_.erase(i);
+			listaContactos_.insert(i,nuevo);
+			retorna=true;
+			break;
+		}
+	}
+	return retorna;
+}
+
 
 
 bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a bool
@@ -96,7 +118,7 @@ bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a boo
 	bool retorna=false;
 
 	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-		if(comparaNombres(*i,c)==A_IGUAL_B){	//Comprobar si altera el formato de los nombre en listaContactos_
+		if(comparaNombres(*i,c)==A_IGUAL_B){	//Comprobar si altera el formato de los nombres en listaContactos_
 			listaContactos_.erase(i);
 			retorna=true;
 			break;
@@ -154,8 +176,8 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 
 
 bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
-	GestorBackup respaldo;
-	if(respaldo.crearArchivoTexto(listaContactos_))
+	GestorBackup formateo;
+	if(formateo.crearArchivoTexto(listaContactos_))
 		return true;
 	else
 		return false;
