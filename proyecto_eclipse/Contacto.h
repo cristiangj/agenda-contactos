@@ -87,6 +87,9 @@ class Contacto {
 		inline void delRed (int pos) {redes_.erase(redes_.begin() + pos);}; //Elimina la red en la posición indicada
 
 		static std::string getNombreRed(tipoRed t);
+
+		friend std::ostream& operator<<(std::ostream &out,Contacto &c);
+		friend std::istream& operator>>(std::istream &in,Contacto &c);
 };
 
 } /* namespace agenda */
