@@ -62,7 +62,8 @@ namespace agenda {
 
 			if (ficheroSalida.is_open()){
 
-				/*copiamos en el archivo binario cada contacto bloque a bloque segun su tamaño*/
+				/*copiamos en el archivo binario cada contacto con la sobrecarga del operador << realizada
+				 en Contacto.cpp*/
 
 				for (it=listaAgenda.begin();it!=listaAgenda.end();++it){
 
@@ -123,7 +124,8 @@ namespace agenda {
 
 			ficheroEntrada.seekg(0);
 
-					/*leemos cada contacto bloque a bloque segun el tamaño de Contacto*/
+					/*extraemos del archivo binario cada contacto con la sobrecarga del operador >> realizada
+					 en Contacto.cpp*/
 
 					while (ficheroEntrada.peek() != EOF){
 
@@ -183,10 +185,15 @@ namespace agenda {
 	bool GestorBackup::crearArchivoTexto (list<Contacto> listaAgenda){
 
 		ofstream ficheroSalida("Mi_agenda.txt",ios::out | ios::trunc);
-		list<Contacto>::iterator it;
-		int nveces=0,i;
 
 			if (ficheroSalida.is_open()){
+
+				vector<string> telefonos_aux;
+				vector<Direccion> direcciones_aux;
+				vector<CuentaRedSocial> redes_aux;
+				list<Contacto>::iterator it;
+				int nveces=0,i;
+
 
 				for (it=listaAgenda.begin();it!=listaAgenda.end();++it){
 
@@ -195,38 +202,43 @@ namespace agenda {
 					ficheroSalida << "Nombre: " << (*it).getNombre() << endl;
 					ficheroSalida << "Apellidos: " << (*it).getApellidos() << endl;
 					ficheroSalida << "DNI: " << (*it).getDni() << endl;
-					nveces = (*it).telefonos.size();
+
+					telefonos_aux = (*it).getTelefonos();
+					nveces = telefonos_aux.size();
 
 						for (i=0;i<nveces;i++){
 
-							ficheroSalida << "Telefono " << i << ":" << (*it).telefonos[i] << endl;
+							ficheroSalida << "Teléfono " << i << ":" << telefonos_aux[i] << endl;
 
 						}
 
 					ficheroSalida << "Correo-electrónico: " << (*it).getCorreoE() << endl;
-					nveces=(*it).direcciones_.size();
+
+					direcciones_aux = (*it).getDirecciones();
+					nveces=direcciones_aux.size();
+
 					ficheroSalida << "Dirección/es: " << endl;
 
 						for (i=0;i<nveces;i++){
 
-							ficheroSalida << "calle: " << (*it).direcciones_[i].calle << endl;
-							ficheroSalida << "numero: " << (*it).direcciones_[i].numero << endl;
-							ficheroSalida << "piso: " << (*it).direcciones_[i].piso << endl;
-							ficheroSalida << "puerta: " << (*it).direcciones_[i].puerta << endl;
+							ficheroSalida << "calle: " << direcciones_aux[i].calle << endl;
+							ficheroSalida << "número: " << direcciones_aux[i].numero << endl;
+							ficheroSalida << "piso: " << direcciones_aux[i].piso << endl;
+							ficheroSalida << "puerta: " << direcciones_aux[i].puerta << endl;
 
 						}
 
 					ficheroSalida << "Anotaciones: " << (*it).getCorreoE() << endl;
 					ficheroSalida << "Favorito: " << (*it).getFavoritos() << endl;
-					ficheroSalida << "NConsultas: " << (*it).getConsultas() << endl;
 
-					nveces=(*it).redes_.size();
+					redes_aux = (*it).getRedes();
+					nveces = redes_aux.size();
 					ficheroSalida << "Cuenta Red/es: " < endl;
 
 						for (i=0;i<nveces;i++){
 
-							ficheroSalida << "Red: " << (*it).redes_[i].red << endl;
-							ficheroSalida << "Usuario: " << (*it).redes_[i].usuario << endl;
+							ficheroSalida << "Red: " << redes_aux[i].red << endl;
+							ficheroSalida << "Usuario: " << redes_aux[i].usuario << endl;
 
 						}
 
