@@ -78,7 +78,7 @@ bool comparaConsultas(Contacto a, Contacto b){
 	if(a.getNconsultas()>=b.getNconsultas()) return true;
 	else if(a.getNconsultas()<b.getNconsultas()) return false;
 	return (a.getNconsultas()>=b.getNconsultas());
-};
+}
 
 
 
@@ -167,7 +167,7 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 	std::list<Contacto> aux=listaContactos_;
 	aux.sort(comparaConsultas);
 	auto j=aux.begin();
-	for(int i=0;i<5;i++,j++)
+	for(int i=0;i<cuantos;i++,j++)
 		result[i]=*j;
 
 	return result;
@@ -175,12 +175,12 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 
 
 
-bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
+/*bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
 	GestorBackup formateo;
 	if(formateo.crearArchivoTexto(listaContactos_))
 		return true;
 	else
 		return false;
-}
+}*/
 
 } /* namespace agenda */

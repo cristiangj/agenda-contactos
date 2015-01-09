@@ -9,8 +9,8 @@
 #define GESTORAGENDA_H_
 
 #include "Contacto.h"
-#include "GestorBackup.h"
-#include "PersistenciaAgenda.h"
+//#include "GestorBackup.h"
+//#include "PersistenciaAgenda.h"
 #include <list>
 #include <string>
 
@@ -32,15 +32,15 @@ private:
 
 	/*
 	 * Función que devuelve distintos enteros según el orden alfabético que tengan los contactos pasados como parámetros
-	 * Necesaria para addContacto y borrarContacto
+	 * Necesaria para addContacto modificarContacto y borrarContacto
 	 */
 	int comparaNombres(Contacto a, Contacto b);
 
 	/*
-	 * Función que compara el número de consultas de dos contactos
-	 * Necesaria para masUsados
-	 */
-	bool comparaConsultas(Contacto a, Contacto b);
+	* Función que compara el número de consultas de dos contactos
+	* Necesaria para masUsados
+	*/
+	static bool comparaConsultas(const Contacto a, const Contacto b);
 
 	/*
 	 * Función que sustituye caracteres críticos para búsqueda de contactos por letras normales
@@ -52,15 +52,15 @@ private:
 public:
 	GestorAgenda() {
 		// TODO Auto-generated constructor stub
-		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
+		/*PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
 		std::list<Contacto> nuevaLista = respaldo.leeBD();
-		cargaListaContactos(nuevaLista);
+		cargaListaContactos(nuevaLista);*/
 	};
 
 	virtual ~GestorAgenda() {
 		// TODO Auto-generated destructor stub
-		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda guarda los datos en un fichero
-		respaldo.escribeBD(listaContactos_);
+		/*PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda guarda los datos en un fichero
+		respaldo.escribeBD(listaContactos_);*/
 	};
 
 	/*
@@ -97,6 +97,8 @@ public:
 	 * Llama a la clase GestorBackup para que presente los datos actuales de la agenda en un formato legible para el usuario
 	 */
 	//bool imprimirTexto(std::string nombreFichero);
+
+
 
 }; /* class GestorAgenda */
 } /* namespace agenda */
