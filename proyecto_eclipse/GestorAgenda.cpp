@@ -90,6 +90,8 @@ bool GestorAgenda::addContacto(Contacto c){
 			return false;
 		if(comparaNombres(*i,c)==B_ANTES_A){
 			listaContactos_.insert(i,c);
+			PersistenciaAgenda respaldo;
+			respaldo.guardaBD(listaContactos_);
 			break;
 		}
 	}
@@ -105,6 +107,8 @@ bool GestorAgenda::modificarContacto(Contacto nuevo, Contacto viejo){
 			listaContactos_.erase(i);
 			listaContactos_.insert(i,nuevo);
 			retorna=true;
+			PersistenciaAgenda respaldo;
+			respaldo.guardaBD(listaContactos_);
 			break;
 		}
 	}
@@ -121,6 +125,8 @@ bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a boo
 		if(comparaNombres(*i,c)==A_IGUAL_B){	//Comprobar si altera el formato de los nombres en listaContactos_
 			listaContactos_.erase(i);
 			retorna=true;
+			PersistenciaAgenda respaldo;
+			respaldo.guardaBD(listaContactos_);
 			break;
 		}
 	}
@@ -175,12 +181,12 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 
 
 
-/*bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
+bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
 	GestorBackup formateo;
 	if(formateo.crearArchivoTexto(listaContactos_))
 		return true;
 	else
 		return false;
-}*/
+}
 
 } /* namespace agenda */
