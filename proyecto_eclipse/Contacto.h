@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <istream>
+#include <ostream>
 
 namespace agenda {
 

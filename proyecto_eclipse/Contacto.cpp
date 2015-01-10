@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <istream>
+#include <ostream>
 
 namespace agenda {
 
@@ -141,18 +143,18 @@ std::string Contacto::getNombreRed(tipoRed t){
 	return nombre;
 }
 
-	istream& operator>>(istream &in,Contacto &c){
+std::istream& operator>>(std::istream &in, Contacto &c){
 
 		/*variables auxiliares*/
 
-		string nombre_aux, apellidos_aux, dni_aux, telefono_aux, correoE_aux,anotaciones_aux;
+		std::string nombre_aux, apellidos_aux, dni_aux, telefono_aux, correoE_aux,anotaciones_aux;
 		char caracterNulo;
 		bool favoritos_aux;
 		int nveces=0,i,nconsultas_aux;
-		vector<string> vectortelefonos_aux;
-		vector<Direccion> vectordirecciones_aux;
+		std::vector<std::string> vectortelefonos_aux;
+		std::vector<Direccion> vectordirecciones_aux;
 		Direccion direcciondatos_aux;
-		vector<CuentaRedSocial> vectorredes_aux;
+		std::vector<CuentaRedSocial> vectorredes_aux;
 		CuentaRedSocial redesdatos_aux;
 
 		/*leer campos del fichero binario*/
@@ -269,7 +271,7 @@ std::string Contacto::getNombreRed(tipoRed t){
 
 		c.nombre_ = nombre_aux;
 		c.apellidos_ = apellidos_aux;
-		c.DNI_ = dni_aux;
+		c.dni_ = dni_aux;
 		c.telefonos_ = vectortelefonos_aux;
 		c.correoE_= correoE_aux;
 		c.direcciones_ = vectordirecciones_aux;
@@ -281,8 +283,7 @@ std::string Contacto::getNombreRed(tipoRed t){
 		return (in);
 	}
 
-	ostream& operator<<(ostream &out,Contacto &c){
-
+std::ostream& operator<< (std::ostream &out, Contacto &c){
 		/*asignaciones a las variables auxiliares con los datos privados de la clase Contacto, los string al
 		 ser objetos los convertimos a cadena de caracteres char (1 byte) por elemento porque los objetos como
 		 tal no se pueden insertar en un archivo binario*/
@@ -290,14 +291,14 @@ std::string Contacto::getNombreRed(tipoRed t){
 		int i,nveces=0;
 		const char * nombre_aux = c.nombre_.c_str();
 		const char * apellidos_aux = c.apellidos_.c_str();
-		const char * dni_aux = c.DNI_.c_str();
-		vector<string> vectortelefonos_aux = c.telefonos_;
+		const char * dni_aux = c.dni_.c_str();
+		std::vector<std::string> vectortelefonos_aux = c.telefonos_;
 		const char * correoE_aux = c.correoE_.c_str();
-		vector<Direccion> vectordirecciones_aux = c.direcciones_;
+		std::vector<Direccion> vectordirecciones_aux = c.direcciones_;
 		const char * anotaciones_aux = c.anotaciones_.c_str();
 		bool favoritos_aux = c.favoritos_;
 		int nconsultas_aux = c.nconsultas_;
-		vector<CuentaRedSocial> vectorredes_aux = c.redes_;
+		std::vector<CuentaRedSocial> vectorredes_aux = c.redes_;
 
 		/*escritura en el binario de las variables auxiliares, a la hora de leer el archivo binario usaremos
 		 en las cadenas el caracter nulo '\0' para identificar dicho final de la cadena, OJO: en la escritura
