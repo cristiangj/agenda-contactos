@@ -137,13 +137,13 @@ namespace agenda {
 
 					ficheroEntrada.close();
 
-					return listaAgenda;
-
 		}else{
 
 			cout << "\n	~~Error,no se pudo abrir el fichero" << endl;
 
 		}
+
+		return listaAgenda;
 
 	}
 
@@ -173,13 +173,13 @@ namespace agenda {
 
 			closedir(dir);
 
-			return listaCopias;
-
 		}else{
 
 			cout << "\n ~~Error en la ruta del directorio" << endl;
 
 		}
+
+		return listaCopias;
 	}
 
 	bool GestorBackup::crearArchivoTexto (list<Contacto> listaAgenda){
@@ -233,7 +233,7 @@ namespace agenda {
 
 					redes_aux = (*it).getRedes();
 					nveces = redes_aux.size();
-					ficheroSalida << "Cuenta Red/es: " < endl;
+					ficheroSalida << "Cuenta Red/es: " << endl;
 
 						for (i=0;i<nveces;i++){
 
