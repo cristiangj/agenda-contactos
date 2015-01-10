@@ -40,6 +40,7 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 			"f: Mostrar contactos favoritos" << std::endl <<
 			"c: Copias de seguridad" << std::endl <<
 			"t: Generar una agenda en formato de texto" << std::endl <<
+			"s: Salir" << std::endl <<
 			std::endl <<
 			"Introduce un número para acceder a uno de los contactos" << std::endl <<
 			"más usados o introduce una letra para una de las opciones" << std::endl <<
@@ -73,6 +74,9 @@ int Menus::principal(std::vector<Contacto> masUsados) {
 				break;
 			case 't':
 				seleccionUsuario = MENU_FORMATO_TEXTO;
+				break;
+			case 's':
+				seleccionUsuario = MENU_ATRAS;
 				break;
 
 			default:
@@ -127,8 +131,6 @@ int Menus::visionado(Contacto& c) {
 	std::vector<std::string> telefonos = c.getTelefonos();
 	std::vector<Direccion> direcciones = c.getDirecciones();
 	std::vector<CuentaRedSocial> redes = c.getRedes();
-
-	c.anadirNconsultas();
 
 	limpiaPantalla();
 	std::cout <<	"Apellidos: " << c.getApellidos() << std::endl <<
