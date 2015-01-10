@@ -13,6 +13,7 @@
 #include <list>
 #include <istream>
 #include <ostream>
+#include <cstring>
 
 namespace agenda {
 
@@ -53,39 +54,39 @@ class Contacto {
 		Contacto (std::string nombre="", std::string apellidos="", std::string dni="", std::string correoe="", std::string anotaciones="", bool favoritos="", int nconsultas=0);
 
 		bool setNombre (std::string nombre);
-		inline std::string getNombre () {return nombre_;};
+		inline std::string getNombre () const {return nombre_;};
 
 		bool setApellidos (std::string apellidos);
-		inline std::string getApellidos () {return apellidos_;};
-		inline std::string getApellidosyNombre () {return (apellidos_+", "+nombre_);};
+		inline std::string getApellidos () const {return apellidos_;};
+		inline std::string getApellidosyNombre () const {return (apellidos_+", "+nombre_);};
 
 		bool setDni (std::string dni);
-		inline std::string getDni () {return dni_;};
+		inline std::string getDni () const {return dni_;};
 
 		bool setCorreoE (std::string correoe);
-		inline std::string getCorreoE () {return correoE_;};
+		inline std::string getCorreoE () const {return correoE_;};
 
 		void setAnotaciones (std::string anotaciones);
-		inline std::string getAnotaciones () {return anotaciones_;};
+		inline std::string getAnotaciones () const {return anotaciones_;};
 
 		void setFavoritos (bool favoritos);
-		inline bool getFavoritos () {return favoritos_;};
+		inline bool getFavoritos () const {return favoritos_;};
 
 		void setNconsultas (int nconsultas);
-		inline int getNconsultas () {return nconsultas_;};
+		inline int getNconsultas () const {return nconsultas_;};
 		void anadirNconsultas ();
 
 		bool setTelefono (std::string telefono);
-		inline std::vector <std::string> getTelefonos () {return telefonos_;};
+		inline std::vector <std::string> getTelefonos () const {return telefonos_;};
 
 		inline void delTelefono (int pos) {telefonos_.erase(telefonos_.begin() + pos);}; //Elimina el teléfono en la posicion indicada
 
 		bool setDireccion (Direccion dir);
-		inline std::vector <Direccion> getDirecciones () {return direcciones_;};
+		inline std::vector <Direccion> getDirecciones () const {return direcciones_;};
 		inline void delDireccion (int pos) {direcciones_.erase(direcciones_.begin() + pos);}; //Elimina la dirección en la posición indicada
 
 		bool setRed (CuentaRedSocial red);
-		inline std::vector <CuentaRedSocial> getRedes () {return redes_;};
+		inline std::vector <CuentaRedSocial> getRedes () const {return redes_;};
 		inline void delRed (int pos) {redes_.erase(redes_.begin() + pos);}; //Elimina la red en la posición indicada
 
 		static std::string getNombreRed(tipoRed t);

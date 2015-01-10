@@ -16,14 +16,14 @@ namespace agenda {
 
 class GestorBackup {
 private:
-	/*esta funcion nos devolvera un string con la fecha actual*/
-	std::string static dameFecha();
 
 public:
+	/*esta funcion nos devolvera un string con la fecha actual*/
+	std::string static dameFecha();
 	static bool crearCopiaSeguridad (std::list<Contacto> listaAgenda);
 	static bool borrarCopiaSeguridad (std::string nombreCopia);
 	static std::list<Contacto> obtenerCopiaSeguridad (std::string nombreCopia);
-	static std::list<std::string> getListaCopiasSeguridad ();
+	static std::vector<std::string> getListaCopiasSeguridad ();
 	static bool crearArchivoTexto (std::list<Contacto> listaAgenda);
 
 };

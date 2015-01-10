@@ -16,7 +16,10 @@ using namespace std;
 
 namespace agenda{
 
+string PersistenciaAgenda::nombreFichero="contacto_db.bin";
+
 	bool PersistenciaAgenda::guardaBD(list<Contacto> listaAgenda){
+		std::list<Contacto>::iterator it;
 
 		ofstream ficheroSalida(nombreFichero.c_str(),ios::out | ios::binary |ios::trunc);
 
@@ -25,7 +28,7 @@ namespace agenda{
 		 contiene datos los borra y los reemplaza por los nuevos*/
 
 			if(ficheroSalida.is_open()){
-
+				cout << "Guardando" << endl;
 			/*escribimos cada contacto de la agenda en nuestro archivo binario con el operator << 
 			sobrecargado en la clase contacto y definido en Contacto.cpp, se hace asi debido a que 
 			un objeto no se puede introducir directamente en un archivo binario, NOTA: utilizamos este
@@ -33,7 +36,6 @@ namespace agenda{
 			teniamos cuando cerramos el programa*/
 
 				for (it=listaAgenda.begin();it!=listaAgenda.end();it++){
-
 					ficheroSalida << (*it);
 
 				}
@@ -52,6 +54,7 @@ namespace agenda{
 	}
 
 	list<Contacto> PersistenciaAgenda::leeBD(){
+		std::list<Contacto>::iterator it;
 
 		ifstream ficheroEntrada(nombreFichero.c_str(),ios::in | ios::binary);
 
@@ -74,14 +77,14 @@ namespace agenda{
 			}
 
 			ficheroEntrada.close();
-			
-			return listaAgenda;
 		
 		}else{
 			
 			cout << "\n ~~ Error en la apertura de fichero" << endl;
 			
 		}
+
+		return listaAgenda;
 
 	}
 

@@ -28,6 +28,8 @@
 #define MENU_MODIFICAR_CONTACTO -1
 #define MENU_BORRAR_CONTACTO -2
 
+#define	NO_ENCONTRADO -1
+
 namespace agenda {
 
 class Menus {

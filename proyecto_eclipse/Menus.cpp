@@ -15,7 +15,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstdio>
-#include <limits>
+#include <climits>
 
 
 namespace agenda{
@@ -105,24 +105,30 @@ int Menus::listado(std::vector<Contacto> lista) {
 	int seleccion;
 
 	limpiaPantalla();
-	std::cout << "Selecciona un contacto:" << std::endl << std::endl;
+	if(!lista.empty()){
+		std::cout << "Selecciona un contacto:" << std::endl << std::endl;
 
-	for(int i=0 ; i < lista.size() ; ++i){
-		std::cout << (i+1) << ") " << lista.at(i).getApellidosyNombre() << std::endl;
-	}
-
-	bool selValida = false; //¿Es la selección válida?
-	do{
-		std::cout << "--> ";
-		seleccion = getEntradaInt();
-
-		//Comprobación de la seleccion
-		((seleccion-1) < 0 || seleccion > lista.size())? selValida = false : selValida = true;
-
-		if(!selValida){
-			std::cout << "Selección inválida" << std::endl;
+		for(int i=0 ; i < lista.size() ; ++i){
+			std::cout << (i+1) << ") " << lista.at(i).getApellidosyNombre() << std::endl;
 		}
-	}while(!selValida);
+
+		bool selValida = false; //¿Es la selección válida?
+		do{
+			std::cout << "--> ";
+			seleccion = getEntradaInt()-1;
+
+			//Comprobación de la seleccion
+			((seleccion) < 0 || seleccion >= lista.size())? selValida = false : selValida = true;
+
+			if(!selValida){
+				std::cout << "Selección inválida" << std::endl;
+			}
+		}while(!selValida);
+	} else {
+		std::cout << "No encontrado" << std::endl;
+		getEntrada();
+		seleccion = NO_ENCONTRADO;
+	}
 
 	return seleccion;
 }
@@ -415,7 +421,6 @@ int Menus::copiaSeguridad() {
 bool Menus::crearCopiaSeguridad() {
 	std::string nombreCS;
 	std::string aux;
-	std::list<char> caracValidos = {'s','n'};
 	bool seleccion;
 
 	nombreCS = GestorBackup::dameFecha();
@@ -428,22 +433,11 @@ bool Menus::crearCopiaSeguridad() {
 					std::endl <<
 					std::endl <<
 					std::endl;
+	std::cout << "(S/n)" << std::endl << "--> ";
+	aux = getEntrada();
+	if(aux.size() == 1 && tolower(aux.at(0)) == 'n') seleccion = true;
+	else seleccion = false;
 
-	bool selValida = true; //¿Es la selección válida?
-	do{
-		std::cout << "(S/n)" << std::endl << "--> ";
-		aux = getEntrada();
-
-		selValida = comprobarEntradaValida(caracValidos,aux.at(0));
-		if(!selValida){
-			std::cout << "Selección inválida" << std::endl;
-		}
-	}while(!selValida);
-
-	if(tolower(aux.at(0)) == 's')
-		seleccion = true;
-	else
-		seleccion = false;
 
 	return seleccion;
 }
@@ -456,8 +450,13 @@ std::string Menus::restaurarCopiaSeguridad() {
 	std::string nombreRestauracion; //Nombre de la copia a restaurar (lo que la funcion devolverá)
 
 	limpiaPantalla();
-	std::cout << "Esta es la lista de las copias de seguridad guardadas:" << std::endl << std::endl;
+	if(copiasGuardadas.empty()){
+		std::cout << "No hay copias de seguridad guardadas" << std::endl;
+		getEntrada();
+		return nombreRestauracion;
+	}
 
+	std::cout << "Esta es la lista de las copias de seguridad guardadas:" << std::endl << std::endl;
 	std::vector<std::string>::iterator i;
 	int cuenta;
 
@@ -495,11 +494,17 @@ std::string Menus::restaurarCopiaSeguridad() {
 std::string Menus::eliminarCopiaSeguridad() {
 	std::vector<std::string> copiasGuardadas = GestorBackup::getListaCopiasSeguridad();
 	std::string aux;
-	bool restaurar = false;
+	bool borrar = false;
 	int seleccion;
 	std::string nombreBorrar; //Nombre de la copia a borrar (lo que la funcion devolverá)
 
 	limpiaPantalla();
+	if(copiasGuardadas.empty()){
+		std::cout << "No hay copias de seguridad guardadas" << std::endl;
+		getEntrada();
+		return nombreBorrar;
+	}
+
 	std::cout << "Esta es la lista de las copias de seguridad guardadas:" << std::endl << std::endl;
 
 	int cuenta;
@@ -508,41 +513,52 @@ std::string Menus::eliminarCopiaSeguridad() {
 		std::cout << (i+1) << ") " << copiasGuardadas.at(i) << std::endl;
 	}
 
-	std::cout <<	"¿Cuál deseas eliminar?" << std::endl;
-
-	bool selValida = true; //¿Es la selección válida?
-	do{
-		std::cout << "--> ";
-		aux = getEntradaInt();
-
-		selValida = seleccion > 0 && seleccion <= copiasGuardadas.size();
-		if(!selValida){
-			std::cout << "Selección inválida" << std::endl;
-		}
-	}while(!selValida);
-
-	//Asignamos al valor devuelto la seleccion del usuario
-	nombreBorrar = copiasGuardadas.at(seleccion-1);
-
-	std::cout << std::endl <<	"Se eliminará \"" << nombreBorrar << "\"" << std::endl <<
-								"¿Está seguro de que quiere eliminarla? (s/N)" << std::endl <<
+	std::cout << std::endl <<	"¿Deseas eliminar alguna de ellas? (s/N)" << std::endl <<
 								"--> ";
 	aux = getEntrada();
-	if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
+	if(aux.size() == 1 && tolower(aux.at(0)) == 's') borrar = true;
 
-	}
-	else{
-		nombreBorrar.clear();
-		std::cout << "La copia de seguridad no se eliminará";
-		aux = getEntrada(); //Pausa del programaS
+	if(borrar){
+		std::cout <<	"¿Cuál deseas eliminar?" << std::endl;
+
+		bool selValida = true; //¿Es la selección válida?
+		do{
+			std::cout << "--> ";
+			seleccion = getEntradaInt();
+
+			selValida = seleccion > 0 && seleccion <= copiasGuardadas.size();
+			if(!selValida){
+				std::cout << "Selección inválida" << std::endl;
+			}
+		}while(!selValida);
+
+		if(seleccion == 0) return nombreBorrar; //Si selecciona atrás, se devuelve el nombre vacío
+
+		//Asignamos al valor devuelto la seleccion del usuario
+		nombreBorrar = copiasGuardadas.at(seleccion-1);
+
+		std::cout << std::endl <<	"Se eliminará \"" << nombreBorrar << "\"" << std::endl <<
+									"¿Está seguro de que quiere eliminarla? (s/N)" << std::endl <<
+									"--> ";
+		aux = getEntrada();
+		if(aux.size() == 1 && tolower(aux.at(0)) == 's'){
+
+		}
+		else{
+			nombreBorrar.clear();
+			std::cout << "La copia de seguridad no se eliminará";
+			aux = getEntrada(); //Pausa del programa
+		}
 	}
 
 	return nombreBorrar;
 }
 
 std::string Menus::getEntrada() {
-	std::string in;
+	std::string in, trash;
+
 	std::getline(std::cin, in);
+
 	return in;
 }
 
@@ -746,12 +762,12 @@ Contacto Menus::modificarContacto(const Contacto &con){
 
 			std::cout << "Lista de cuentas:" << std::endl;
 
-			for(int i=0 ; i < telfs.size() ; ++i){
+			for(int i=0 ; i < redes.size() ; ++i){
 				std::cout << (i+1) << ") " << Contacto::getNombreRed(redes.at(i).red) << ": " << redes.at(i).usuario << std::endl;
 			}
 			std::cout << "¿Cuál deseas eliminar?: ";
 			auxN = getEntradaInt();
-			if(auxN > 0 && auxN <= redes.size()) c.delTelefono(auxN-1);
+			if(auxN > 0 && auxN <= redes.size()) c.delRed(auxN-1);
 			break;
 
 		case 11: //Notas

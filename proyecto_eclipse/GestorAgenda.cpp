@@ -19,16 +19,16 @@ namespace agenda{
 #define A_ANTES_B 1
 #define B_ANTES_A 2
 
+GestorAgenda *GestorAgenda::instancia = 0;
 
-
-std::string simplificaCadena(std::string cad){
+std::string GestorAgenda::simplificaCadena(std::string cad){
 
 	//Quita las tildes
 	std::vector <std::string> tildes={"Á","á","É","é","Í","í","Ó","ó","Ú","ú"};	//Al compilar: g++ -std=c++11 archivo.cpp (inicialización de vector válida a partir del estandar 2011)
 	std::vector <std::string> notildes={"A","a","E","e","I","i","O","o","U","u"};
 	size_t reemplazo;
 	for(int i=0;i<tildes.size();i++){
-		while((reemplazo=cad.find(tildes[i])))
+		while((reemplazo=cad.find(tildes[i])) != std::string::npos)
 			cad.replace(reemplazo, tildes[i].size(),notildes[i]);
 	}
 
@@ -41,30 +41,28 @@ std::string simplificaCadena(std::string cad){
 
 
 
-int comparaNombres(Contacto a, Contacto b){
-
-	a.setApellidos(simplificaCadena(a.getApellidos()));
-	b.setApellidos(simplificaCadena(b.getApellidos()));
+int GestorAgenda::comparaNombres(const Contacto &a, const Contacto &b){
+	std::string nombreA = simplificaCadena(a.getNombre());
+	std::string apellidoA = simplificaCadena(a.getApellidos());
+	std::string nombreB = simplificaCadena(b.getNombre());
+	std::string apellidoB = simplificaCadena(b.getApellidos());
 
 	int i=0;
-	while((i<a.getApellidos().length())&&(i<b.getApellidos().length())){
-		if(a.getApellidos()[i]<b.getApellidos()[i])
+	while((i<apellidoA.length())&&(i<apellidoB.length())){
+		if(apellidoA[i]<apellidoB[i])
 			return A_ANTES_B;
 
-		if(a.getApellidos()[i]>b.getApellidos()[i])
+		if(apellidoA[i]>apellidoB[i])
 			return B_ANTES_A;
 	}
 	//Si llega hasta aquí => apellidos iguales
 
-	a.setNombre(simplificaCadena(a.getNombre()));
-	b.setNombre(simplificaCadena(b.getNombre()));
-
 	i=0;
-	while((i<a.getNombre().length())&&(i<b.getNombre().length())){
-			if(a.getNombre()[i]<b.getNombre()[i])
+	while((i<nombreA.length())&&(i<nombreB.length())){
+			if(nombreA[i]<nombreB[i])
 				return A_ANTES_B;
 
-			if(a.getNombre()[i]>b.getNombre()[i])
+			if(nombreA[i]>nombreB[i])
 				return B_ANTES_A;
 	}
 	//Si llega hasta aquí => nombres completos iguales
@@ -72,46 +70,72 @@ int comparaNombres(Contacto a, Contacto b){
 	return A_IGUAL_B;
 }
 
+bool GestorAgenda::compare(const Contacto &c1, const Contacto &c2){
+	int check = comparaNombres(c1,c2);
+	bool ret;
 
+	switch(check){
+	case A_ANTES_B:
+		ret = true;
+		break;
 
-bool comparaConsultas(Contacto a, Contacto b){
-	if(a.getNconsultas()>=b.getNconsultas()) return true;
-	else if(a.getNconsultas()<b.getNconsultas()) return false;
-	return (a.getNconsultas()>=b.getNconsultas());
+	case B_ANTES_A:
+	case A_IGUAL_B:
+		ret = false;
+		break;
+	}
+
+	return ret;
 }
 
 
 
+bool GestorAgenda::comparaConsultas(Contacto a, Contacto b){
+	bool aMAYORb;
+	if(a.getNconsultas()>=b.getNconsultas()) aMAYORb = true;
+	else if(a.getNconsultas()<b.getNconsultas()) aMAYORb = false;
+	return aMAYORb;
+}
+
+void GestorAgenda::setListaContactos(std::list<Contacto> lista){
+	listaContactos_=lista;
+	PersistenciaAgenda::guardaBD(listaContactos_);
+}
+
 
 bool GestorAgenda::addContacto(Contacto c){
 
-	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-		if(comparaNombres(*i,c)==A_IGUAL_B)	//Comprobar si altera el formato de los nombre en listaContactos_
-			return false;
-		if(comparaNombres(*i,c)==B_ANTES_A){
-			listaContactos_.insert(i,c);
-			PersistenciaAgenda respaldo;
-			respaldo.guardaBD(listaContactos_);
-			break;
-		}
-	}
+	listaContactos_.push_back(c);
+	ordenaListaContactos();
+	PersistenciaAgenda::guardaBD(listaContactos_);
+
+//	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
+//		if(comparaNombres(*i,c)==B_ANTES_A || listaContactos_.empty()){
+//			listaContactos_.insert(i,c);
+//			PersistenciaAgenda::guardaBD(listaContactos_);
+//			break;
+//		}
+//
+//		if(comparaNombres(*i,c)==A_IGUAL_B)	//Comprobar si altera el formato de los nombre en listaContactos_
+//			return false;
+//
+//	}
 	return true;
 }
 
 
 bool GestorAgenda::modificarContacto(Contacto nuevo, Contacto viejo){
-
 	bool retorna=false;
-	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-		if(comparaNombres(*i, viejo)==A_IGUAL_B){
-			listaContactos_.erase(i);
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end() && !retorna; i++){
+		if(i->getApellidosyNombre().compare(viejo.getApellidosyNombre()) == 0){
+			i = listaContactos_.erase(i);
 			listaContactos_.insert(i,nuevo);
 			retorna=true;
-			PersistenciaAgenda respaldo;
-			respaldo.guardaBD(listaContactos_);
-			break;
+			PersistenciaAgenda::guardaBD(listaContactos_);
 		}
 	}
+	ordenaListaContactos();
+
 	return retorna;
 }
 
@@ -121,19 +145,19 @@ bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a boo
 
 	bool retorna=false;
 
-	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
-		if(comparaNombres(*i,c)==A_IGUAL_B){	//Comprobar si altera el formato de los nombres en listaContactos_
+	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end() && !retorna; i++){
+		if(i->getApellidosyNombre().compare(c.getApellidosyNombre()) == 0){	//Comprobar si altera el formato de los nombres en listaContactos_
 			listaContactos_.erase(i);
 			retorna=true;
-			PersistenciaAgenda respaldo;
-			respaldo.guardaBD(listaContactos_);
-			break;
+			PersistenciaAgenda::guardaBD(listaContactos_);
 		}
 	}
 	return retorna;
 }
 
-
+void GestorAgenda::ordenaListaContactos(){
+	listaContactos_.sort(GestorAgenda::compare);
+}
 
 
 std::vector<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos){
@@ -144,7 +168,7 @@ std::vector<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellido
 
 	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		aux=simplificaCadena(i->getApellidos());
-		if(aux==apellidos)
+		if(aux.find(apellidos) != std::string::npos) //si forma parte de los apellidos
 			result.push_back(*i);
 	}
 	return result;
@@ -168,14 +192,12 @@ std::vector<Contacto> GestorAgenda::buscarContactoFavoritos(){
 
 
 std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
-
-	std::vector<Contacto> result(cuantos);
+	std::vector<Contacto> result;
 	std::list<Contacto> aux=listaContactos_;
 	aux.sort(comparaConsultas);
 	auto j=aux.begin();
-	for(int i=0;i<cuantos;i++,j++)
-		result[i]=*j;
-
+	for(int i=0;i<cuantos && j != aux.end();i++,j++)
+		result.push_back(*j);
 	return result;
 }
 

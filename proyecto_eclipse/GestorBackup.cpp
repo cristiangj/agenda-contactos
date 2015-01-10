@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>										//biblioteca stringstream para concatenar con int
+#include <iterator>
 #include <ctime>
 #include <cstdlib>										//biblioteca para poder usar system
 #include <dirent.h>										//biblioteca para poder usar opendir
@@ -147,9 +148,10 @@ namespace agenda {
 
 	}
 
-	list<string> GestorBackup::getListaCopiasSeguridad(){
+	vector<string> GestorBackup::getListaCopiasSeguridad(){
 
-		list<string> listaCopias;							//lista para guardar los nom de los archivos leidos
+		vector<string> vectorCopias;							//lista para guardar los nom de los archivos leidos
+		list<string> listaArchivos;
 
 		/* struct DIR para abrir el directorio y struct dirent la cual almacena los nombres de los
 		ficheros,ambas estructuras definidas en dirent.h*/
@@ -167,19 +169,23 @@ namespace agenda {
 
 			while((pdir = readdir(dir))!=NULL){
 
-				listaCopias.push_back(pdir->d_name);
+				listaArchivos.push_back(pdir->d_name);
 
 			}
 
 			closedir(dir);
 
+			listaArchivos.remove("."); //Eliminar "." y ".." (directorio actual y directorio padre)
+			listaArchivos.remove("..");
+
+			vectorCopias.assign(listaArchivos.begin(),listaArchivos.end());
 		}else{
 
 			cout << "\n ~~Error en la ruta del directorio" << endl;
 
 		}
 
-		return listaCopias;
+		return vectorCopias;
 	}
 
 	bool GestorBackup::crearArchivoTexto (list<Contacto> listaAgenda){
@@ -192,13 +198,15 @@ namespace agenda {
 				vector<Direccion> direcciones_aux;
 				vector<CuentaRedSocial> redes_aux;
 				list<Contacto>::iterator it;
+				string trad;
 				int nveces=0,i;
 
+				ficheroSalida << "Mi agenda,exportada en fecha: " << dameFecha() << endl;
+				ficheroSalida << "=================================================" << endl;
 
 				for (it=listaAgenda.begin();it!=listaAgenda.end();++it){
 
-					ficheroSalida << "Mi agenda,exportada en fecha: " << dameFecha() << endl;
-					ficheroSalida << "=================================================" << endl;
+
 					ficheroSalida << "Nombre: " << (*it).getNombre() << endl;
 					ficheroSalida << "Apellidos: " << (*it).getApellidos() << endl;
 					ficheroSalida << "DNI: " << (*it).getDni() << endl;
@@ -208,12 +216,13 @@ namespace agenda {
 
 						for (i=0;i<nveces;i++){
 
-							ficheroSalida << "Teléfono " << i << ":" << telefonos_aux[i] << endl;
+							ficheroSalida << "Teléfono " << (i+1) << ": " << telefonos_aux[i] << endl;
 
 						}
 
 					ficheroSalida << "Correo-electrónico: " << (*it).getCorreoE() << endl;
 
+					ficheroSalida << endl;
 					direcciones_aux = (*it).getDirecciones();
 					nveces=direcciones_aux.size();
 
@@ -223,25 +232,27 @@ namespace agenda {
 
 							ficheroSalida << "calle: " << direcciones_aux[i].calle << endl;
 							ficheroSalida << "número: " << direcciones_aux[i].numero << endl;
-							ficheroSalida << "piso: " << direcciones_aux[i].piso << endl;
-							ficheroSalida << "puerta: " << direcciones_aux[i].puerta << endl;
+//							ficheroSalida << "piso: " << direcciones_aux[i].piso << endl;
+//							ficheroSalida << "puerta: " << direcciones_aux[i].puerta << endl;
 
 						}
 
-					ficheroSalida << "Anotaciones: " << (*it).getCorreoE() << endl;
-					ficheroSalida << "Favorito: " << (*it).getFavoritos() << endl;
+					ficheroSalida << "Anotaciones: " << (*it).getAnotaciones() << endl;
+					trad = it->getFavoritos()?"Sí":"No";
+					ficheroSalida << "Favorito: " << trad << endl;
 
+					ficheroSalida << endl;
 					redes_aux = (*it).getRedes();
 					nveces = redes_aux.size();
 					ficheroSalida << "Cuenta Red/es: " << endl;
 
 						for (i=0;i<nveces;i++){
 
-							ficheroSalida << "Red: " << redes_aux[i].red << endl;
-							ficheroSalida << "Usuario: " << redes_aux[i].usuario << endl;
+							ficheroSalida << "Cuenta de " << Contacto::getNombreRed(redes_aux[i].red)  << ": " << redes_aux[i].usuario << endl;
 
 						}
 
+					ficheroSalida << endl << "----------------------------------" << endl << endl;
 				}
 
 				return true;

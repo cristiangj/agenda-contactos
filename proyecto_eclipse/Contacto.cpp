@@ -255,7 +255,7 @@ std::istream& operator>>(std::istream &in, Contacto &c){
 
 			//leer red
 
-			in.read((char *) &(redesdatos_aux.red),sizeof(int));
+			in.read((char *) &(redesdatos_aux.red),sizeof(tipoRed));
 
 			//leer usuario
 
@@ -382,7 +382,7 @@ std::ostream& operator<< (std::ostream &out, Contacto &c){
 
 				//escribir red
 
-				out.write((char *) &(vectorredes_aux[i].red),sizeof(int));
+				out.write((char *) &(vectorredes_aux[i].red),sizeof(tipoRed));
 
 				//escribir usuario
 
@@ -393,6 +393,7 @@ std::ostream& operator<< (std::ostream &out, Contacto &c){
 
 			return (out);
 		}
+
 
 } /* namespace agenda */
 

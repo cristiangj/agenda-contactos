@@ -9,6 +9,7 @@
 #include "Menus.h"
 #include "GestorBackup.h"
 #include <string>
+#include <iostream>
 
 using namespace agenda;
 
@@ -16,7 +17,6 @@ void menuContacto(Contacto c);
 void menuCopiasSeguridad();
 
 int main(){
-	GestorAgenda gestor = GestorAgenda::getGestor();
 	bool salir = false;
 	Contacto c; //Contacto auxiliar
 	std::string entrada;
@@ -27,20 +27,22 @@ int main(){
 
 	do{
 		//Menú principal
-		masUsados = gestor.masUsados(CONTACTOS_MAS_USADOS);
+		masUsados = GestorAgenda::getGestor()->masUsados(CONTACTOS_MAS_USADOS);
 		seleccion = Menus::principal(masUsados);
 		switch(seleccion){
 		case MENU_ANADIR_CONTACTO:
 			c = Menus::addContacto();
-			gestor.addContacto(c);
+			if(GestorAgenda::getGestor()->addContacto(c) == false){
+				std::cout << "What??" << std::endl;
+			}
 			break;
 
 		case MENU_BUSCAR_CONTACTO_APELLIDO:
 			entrada = Menus::busqueda();
-			listado = gestor.buscarContactoApellidos(entrada);
+			listado = GestorAgenda::getGestor()->buscarContactoApellidos(entrada);
 			seleccion = Menus::listado(listado);
 
-			menuContacto(listado.at(seleccion));
+			if(seleccion != NO_ENCONTRADO) menuContacto(listado.at(seleccion));
 			break;
 
 		case MENU_COPIAS_SEGURIDAD:
@@ -48,14 +50,14 @@ int main(){
 			break;
 
 		case MENU_MOSTRAR_FAVORITOS:
-			listado = gestor.buscarContactoFavoritos();
+			listado = GestorAgenda::getGestor()->buscarContactoFavoritos();
 			seleccion = Menus::listado(listado);
 
-			menuContacto(listado.at(seleccion));
+			if(seleccion != NO_ENCONTRADO) menuContacto(listado.at(seleccion));
 			break;
 
 		case MENU_FORMATO_TEXTO:
-			gestor.imprimirTexto();
+			GestorAgenda::getGestor()->imprimirTexto();
 			Menus::formatoLegible();
 			break;
 
@@ -64,7 +66,7 @@ int main(){
 			break;
 
 		default: //Seleccionado un contacto de los más usados
-			menuContacto(masUsados.at(seleccion));
+			if(seleccion != NO_ENCONTRADO) menuContacto(masUsados.at(seleccion));
 			break;
 		}
 	} while(!salir);
@@ -76,14 +78,13 @@ void menuContacto(Contacto c){
 	std::string aux;
 	bool salir = false;
 	Contacto nuevo; //Contacto auxiliar
-	GestorAgenda gestor = GestorAgenda::getGestor();
 
 	do{
 		seleccion = Menus::visionado(c);
 		switch(seleccion){
 		case MENU_MODIFICAR_CONTACTO:
 			nuevo = Menus::modificarContacto(c);
-			gestor.modificarContacto(nuevo,c);
+			GestorAgenda::getGestor()->modificarContacto(nuevo,c);
 			c = nuevo; //El contacto en cuestión pasa a ser el nuevo
 			break;
 
@@ -91,7 +92,7 @@ void menuContacto(Contacto c){
 			borrado = Menus::borrarContacto();
 
 			if(borrado){
-				gestor.borrarContacto(c);
+				GestorAgenda::getGestor()->borrarContacto(c);
 				salir = true;
 			}
 
@@ -111,7 +112,7 @@ void menuContacto(Contacto c){
 	if(!borrado){ //Aumenta el número de consultas solo si no se ha borrado
 		nuevo = c;
 		nuevo.anadirNconsultas();
-		gestor.modificarContacto(nuevo,c);
+		GestorAgenda::getGestor()->modificarContacto(nuevo,c);
 	}
 
 }
@@ -121,7 +122,6 @@ void menuCopiasSeguridad(){
 	bool si;
 	int seleccion;
 	std::string entrada;
-	GestorAgenda gestor = GestorAgenda::getGestor();
 	std::list<Contacto> lista;
 
 	do{
@@ -129,8 +129,8 @@ void menuCopiasSeguridad(){
 		switch(seleccion){
 		case MENU_CREAR_COPIA:
 			si = Menus::crearCopiaSeguridad();
-			if(si){ //Si elige crearla
-				GestorBackup::crearCopiaSeguridad(gestor.getListaContactos());
+			if(true){ //Si elige crearla
+				GestorBackup::crearCopiaSeguridad(GestorAgenda::getGestor()->getListaContactos());
 			}
 			break;
 
@@ -146,7 +146,7 @@ void menuCopiasSeguridad(){
 			if(!entrada.empty()){
 				lista = GestorBackup::obtenerCopiaSeguridad(entrada);
 				if(!lista.empty()){
-					gestor.setListaContactos(lista);
+					GestorAgenda::getGestor()->setListaContactos(lista);
 				}
 			}
 			break;

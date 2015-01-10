@@ -19,9 +19,11 @@ namespace agenda {
 class GestorAgenda {
 
 private:
+	static GestorAgenda *instancia;
+
 	GestorAgenda() {
-		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
-		std::list<Contacto> nuevaLista = respaldo.leeBD();
+		//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
+		std::list<Contacto> nuevaLista = PersistenciaAgenda::leeBD();
 		cargaListaContactos(nuevaLista);
 	};
 
@@ -43,39 +45,43 @@ private:
 	 * Función que devuelve distintos enteros según el orden alfabético que tengan los contactos pasados como parámetros
 	 * Necesaria para addContacto modificarContacto y borrarContacto
 	 */
-	int comparaNombres(Contacto a, Contacto b);
+	static int comparaNombres(const Contacto &a,const Contacto &b);
+
+	static bool compare(const Contacto &c1, const Contacto &c2);
 
 	/*
 	* Función que compara el número de consultas de dos contactos
 	* Necesaria para masUsados
 	*/
-	static bool comparaConsultas(const Contacto a, const Contacto b);
+	static bool comparaConsultas(Contacto a, Contacto b);
 
 	/*
 	 * Función que sustituye caracteres críticos para búsqueda de contactos por letras normales
 	 * Necesaria para comparaNombres y buscarContactoApellidos
 	 */
-	std::string simplificaCadena(std::string cad);
+	static std::string simplificaCadena(std::string cad);
 
+	void ordenaListaContactos();
 
 public:
 	/*
 	 * Devuelve una instancia del gestor (para mantener el singleton)
 	 */
-	static GestorAgenda& getGestor(){
-		static GestorAgenda instancia;
+	static GestorAgenda* getGestor(){
+		if(!instancia){
+			instancia = new GestorAgenda;
+		}
 		return instancia;
 	}
 
 	virtual ~GestorAgenda() {
-		// TODO Auto-generated destructor stub
-		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda guarda los datos en un fichero
-		respaldo.guardaBD(listaContactos_);
+		//Por medio de la clase PersistenciaAgenda guarda los datos en un fichero
+		PersistenciaAgenda::guardaBD(listaContactos_);
 	};
 
 
 	std::list<Contacto> getListaContactos() { return listaContactos_;};
-	void setListaContactos(std::list<Contacto> lista) { listaContactos_ = lista;};
+	void setListaContactos(std::list<Contacto> lista);
 
 	/*
 	 * Función que devuelve todos los contactos que coinciden con el apellido pasado como parámetros

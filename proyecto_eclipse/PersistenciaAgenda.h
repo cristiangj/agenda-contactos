@@ -16,12 +16,11 @@ namespace agenda{
 
 class PersistenciaAgenda {
 private:
-	 std::string nombreFichero="contacto_db.bin";
-	 std::list<Contacto>::iterator it;			//iterador para la lista de Contactos
+	 static std::string nombreFichero;
 
 public:
-	bool guardaBD(std::list<Contacto> lista);
-	std::list<Contacto> leeBD();
+	static bool guardaBD(std::list<Contacto> lista);
+	static std::list<Contacto> leeBD();
 
 };
 
