@@ -1,0 +1,22 @@
+Proyecto realizado por:
+
+Enrique Álvarez Gallego
+Javier Barbero Gómez
+Aurora Esteban Toscano
+Cristian García Jiménez
+(grupo1)
+
+Enlace al repositorio: https://github.com/cristiangj/agenda-contactos/
+
+El diagrama de clases se ha actualizado desde la anterior entrega
+
+No se han realizado las pruebas de unidad por falta de tiempo, debido a problemas a la hora de unir las ramas en git.
+
+INSTRUCCIONES DE INSTALACIÓN Y USO
+---------------------------------------
+
+-Instalación:
+	Situarse en la carpeta "source" y ejecutar "make"
+	
+-Ejecución
+	En la misma carpeta, ejecutar "./agenda"
