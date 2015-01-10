@@ -5,6 +5,8 @@ DEBUG = -g
 agenda: Contacto.o Menus.o GestorAgenda.o GestorBackup.o PersistenciaAgenda.o
 	mkdir -p Backups
 	$(CXX) $^ Main.cpp -o $@ $(CXXFLAGS)
+	chmod +x agenda
+	rm *.o
 	
 debug_agenda: Contacto.o Menus.o GestorAgenda.o GestorBackup.o PersistenciaAgenda.o
 	$(CXX) $^ Main.cpp -o $@ $(CXXFLAGS) $(DEBUG)
