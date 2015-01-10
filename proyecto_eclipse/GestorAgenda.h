@@ -19,6 +19,15 @@ namespace agenda {
 class GestorAgenda {
 
 private:
+	GestorAgenda() {
+		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
+		std::list<Contacto> nuevaLista = respaldo.leeBD();
+		cargaListaContactos(nuevaLista);
+	};
+
+	GestorAgenda(GestorAgenda const&); //No implementar
+	void operator=(GestorAgenda const&); // No implementar
+
 	/*
 	 * Variable tipo list para tener soporte donde modificar los contactos
 	 */
@@ -50,12 +59,13 @@ private:
 
 
 public:
-	GestorAgenda() {
-		// TODO Auto-generated constructor stub
-		PersistenciaAgenda respaldo;	//Por medio de la clase PersistenciaAgenda recupera los datos desde un fichero
-		std::list<Contacto> nuevaLista = respaldo.leeBD();
-		cargaListaContactos(nuevaLista);
-	};
+	/*
+	 * Devuelve una instancia del gestor (para mantener el singleton)
+	 */
+	static GestorAgenda& getGestor(){
+		static GestorAgenda instancia;
+		return instancia;
+	}
 
 	virtual ~GestorAgenda() {
 		// TODO Auto-generated destructor stub
@@ -63,15 +73,19 @@ public:
 		respaldo.guardaBD(listaContactos_);
 	};
 
+
+	std::list<Contacto> getListaContactos() { return listaContactos_;};
+	void setListaContactos(std::list<Contacto> lista) { listaContactos_ = lista;};
+
 	/*
 	 * Función que devuelve todos los contactos que coinciden con el apellido pasado como parámetros
 	 */
-	std::list<Contacto> buscarContactoApellidos(std::string apellidos);
+	std::vector<Contacto> buscarContactoApellidos(std::string apellidos);
 
 	/*
 	 * Función que devuelve todos los contactos preseleccionados como favoritos
 	 */
-	std::list<Contacto> buscarContactoFavoritos();
+	std::vector<Contacto> buscarContactoFavoritos();
 
 	/*
 	 * Función que devuelve un número pasado como parámetro de contactos seleccionándolos por el número de consultas de cada contacto
@@ -96,7 +110,7 @@ public:
 	/*
 	 * Llama a la clase GestorBackup para que presente los datos actuales de la agenda en un formato legible para el usuario
 	 */
-	bool imprimirTexto(std::string nombreFichero);
+	bool imprimirTexto();
 
 
 

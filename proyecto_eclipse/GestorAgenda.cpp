@@ -136,11 +136,11 @@ bool GestorAgenda::borrarContacto(Contacto c){	//Función cambiada de void a boo
 
 
 
-std::list<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos){
+std::vector<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos){
 
 	apellidos=simplificaCadena(apellidos);
 	std::string aux;	//Los cambios en el formato del nombre se harán sobre una cadena auxiliar para no alterar mayúsculas y tildes en listaContactos_
-	std::list<Contacto> result;
+	std::vector<Contacto> result;
 
 	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		aux=simplificaCadena(i->getApellidos());
@@ -153,9 +153,9 @@ std::list<Contacto> GestorAgenda::buscarContactoApellidos(std::string apellidos)
 
 
 
-std::list<Contacto> GestorAgenda::buscarContactoFavoritos(){
+std::vector<Contacto> GestorAgenda::buscarContactoFavoritos(){
 
-	std::list<Contacto> result;
+	std::vector<Contacto> result;
 
 	for(std::list<Contacto>::iterator i=listaContactos_.begin(); i!=listaContactos_.end(); i++){
 		if(i->getFavoritos()==true)
@@ -181,9 +181,8 @@ std::vector<Contacto> GestorAgenda::masUsados(int cuantos){
 
 
 
-bool GestorAgenda::imprimirTexto(std::string nombreFichero){	//Función cambiada de void a bool
-	GestorBackup formateo;
-	if(formateo.crearArchivoTexto(listaContactos_))
+bool GestorAgenda::imprimirTexto(){	//Función cambiada de void a bool
+	if(GestorBackup::crearArchivoTexto(listaContactos_))
 		return true;
 	else
 		return false;
